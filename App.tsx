@@ -31,7 +31,8 @@ import {
   User,
   Menu,
   X,
-  ArrowLeft
+  ArrowLeft,
+  CheckCircle
 } from 'lucide-react';
 import { FileItem, MergeOptions } from './types';
 import { mergeFiles } from './utils/excelProcessor';
@@ -57,8 +58,8 @@ interface ToolContent {
 
 const PAGE_CONTENT: Record<string, ToolContent> = {
   home: {
-    title: "Merge Excel Files",
-    subtitle: "Combine multiple XLSX, XLS, and CSV files into a single master sheet instantly.",
+    title: "Merge Excel Files Online",
+    subtitle: "Combine multiple Excel spreadsheets into one file instantly. Support for XLSX, XLS, CSV, ODS and more. Secure client-side processing means your data never leaves your device.",
     intro: "ExcelMerge Pro is a high-performance, browser-based utility designed for professionals who handle large datasets. Whether you are consolidating monthly reports or merging customer lists, our tool provides a seamless experience without the need for expensive software.",
     whyTitle: "Why Choose Our Excel Merger?",
     whyDesc: "We built this tool to be the fastest and most secure option on the web. By keeping all data local, we solve the two biggest problems of online tools: privacy risks and upload wait times.",
@@ -436,10 +437,10 @@ const Nav = ({ setView, currentView }: { setView: (v: PageView) => void, current
             className="flex items-center gap-3 cursor-pointer group" 
             onClick={() => handleNav('home')}
           >
-            <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100 group-hover:rotate-6 transition-all duration-300">
+            <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-100 group-hover:rotate-6 transition-all duration-300">
               <FileSpreadsheet className="text-white w-7 h-7" />
             </div>
-            <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600 tracking-tight">
+            <span className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-emerald-800 tracking-tight">
               ExcelMerge Pro
             </span>
           </div>
@@ -450,12 +451,12 @@ const Nav = ({ setView, currentView }: { setView: (v: PageView) => void, current
               <button 
                 key={item.id}
                 onClick={() => handleNav(item.id as PageView)} 
-                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all duration-200 hover:bg-indigo-50 relative group
-                  ${currentView === item.id ? 'text-indigo-600 bg-indigo-50/50' : 'text-slate-500 hover:text-indigo-600'}`}
+                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all duration-200 hover:bg-emerald-50 relative group
+                  ${currentView === item.id ? 'text-emerald-700 bg-emerald-50/50' : 'text-slate-500 hover:text-emerald-600'}`}
               >
                 {item.label}
                 {currentView === item.id && (
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-1 h-1 bg-indigo-600 rounded-full" />
+                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-1 h-1 bg-emerald-600 rounded-full" />
                 )}
               </button>
             ))}
@@ -463,7 +464,7 @@ const Nav = ({ setView, currentView }: { setView: (v: PageView) => void, current
 
           {/* Mobile Toggle */}
           <button 
-            className="lg:hidden p-2 text-slate-500 hover:text-indigo-600 transition-colors"
+            className="lg:hidden p-2 text-slate-500 hover:text-emerald-600 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
@@ -479,7 +480,7 @@ const Nav = ({ setView, currentView }: { setView: (v: PageView) => void, current
               key={item.id}
               onClick={() => handleNav(item.id as PageView)} 
               className={`w-full text-left px-5 py-4 rounded-2xl text-lg font-black transition-all
-                ${currentView === item.id ? 'bg-indigo-600 text-white' : 'text-slate-600 hover:bg-slate-50'}`}
+                ${currentView === item.id ? 'bg-emerald-600 text-white' : 'text-slate-600 hover:bg-slate-50'}`}
             >
               {item.label}
             </button>
@@ -511,7 +512,7 @@ const Footer = ({ setView }: { setView: (v: PageView) => void }) => {
             <React.Fragment key={tool.id}>
               <button 
                 onClick={() => { setView(tool.id as PageView); window.scrollTo(0, 0); }}
-                className="hover:text-indigo-400 transition-colors"
+                className="hover:text-emerald-400 transition-colors"
               >
                 {tool.label}
               </button>
@@ -659,14 +660,14 @@ const App: React.FC = () => {
         return (
           <div className="space-y-8">
             <label className="group relative block cursor-pointer">
-              <div className="border-3 border-dashed border-slate-200 group-hover:border-indigo-400 rounded-3xl p-16 transition-all bg-slate-50/50 group-hover:bg-indigo-50/50 flex flex-col items-center justify-center text-center">
-                <FileText className="w-12 h-12 text-indigo-500 mb-6 group-hover:scale-110 transition-transform" />
+              <div className="border-3 border-dashed border-slate-200 group-hover:border-emerald-400 rounded-3xl p-16 transition-all bg-slate-50/50 group-hover:bg-emerald-50/50 flex flex-col items-center justify-center text-center">
+                <FileText className="w-12 h-12 text-emerald-500 mb-6 group-hover:scale-110 transition-transform" />
                 <p className="text-2xl font-black text-slate-800">{files.length > 0 ? files[0].name : "Upload Excel File"}</p>
                 <input type="file" accept=".xlsx,.xls" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
               </div>
             </label>
             {files.length > 0 && !result && (
-              <button onClick={handleExcelToCSV} disabled={isProcessing} className="w-full py-6 bg-indigo-600 text-white font-black rounded-3xl shadow-2xl hover:bg-indigo-700 transition-all flex items-center justify-center text-lg gap-3">
+              <button onClick={handleExcelToCSV} disabled={isProcessing} className="w-full py-6 bg-emerald-600 text-white font-black rounded-3xl shadow-2xl hover:bg-emerald-700 transition-all flex items-center justify-center text-lg gap-3">
                 {isProcessing ? "Converting..." : "Convert to CSV Now"}
               </button>
             )}
@@ -684,14 +685,14 @@ const App: React.FC = () => {
         return (
           <div className="space-y-8">
             <label className="group relative block cursor-pointer">
-              <div className="border-3 border-dashed border-slate-200 group-hover:border-indigo-400 rounded-3xl p-16 transition-all bg-slate-50/50 group-hover:bg-indigo-50/50 flex flex-col items-center justify-center text-center">
-                <Upload className="w-12 h-12 text-indigo-500 mb-6 group-hover:scale-110 transition-transform" />
+              <div className="border-3 border-dashed border-slate-200 group-hover:border-emerald-400 rounded-3xl p-16 transition-all bg-slate-50/50 group-hover:bg-emerald-50/50 flex flex-col items-center justify-center text-center">
+                <Upload className="w-12 h-12 text-emerald-500 mb-6 group-hover:scale-110 transition-transform" />
                 <p className="text-2xl font-black text-slate-800">{files.length > 0 ? `${files.length} CSV Files` : "Drop CSV Files"}</p>
                 <input type="file" multiple accept=".csv" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
               </div>
             </label>
             {files.length > 0 && !result && (
-              <button onClick={handleMergeAction} disabled={isProcessing} className="w-full py-6 bg-indigo-600 text-white font-black rounded-3xl shadow-2xl hover:bg-indigo-700 transition-all flex items-center justify-center text-lg gap-3">
+              <button onClick={handleMergeAction} disabled={isProcessing} className="w-full py-6 bg-emerald-600 text-white font-black rounded-3xl shadow-2xl hover:bg-emerald-700 transition-all flex items-center justify-center text-lg gap-3">
                 {isProcessing ? "Processing..." : "Create Excel Workbook"}
               </button>
             )}
@@ -708,9 +709,9 @@ const App: React.FC = () => {
       case 'json-to-excel':
         return (
           <div className="space-y-6">
-            <textarea id="json-input" className="w-full h-64 p-6 border-2 border-slate-100 rounded-3xl font-mono text-sm focus:ring-4 focus:ring-indigo-100 outline-none shadow-inner bg-slate-50/30" placeholder='[{"name": "Alice"}, {"name": "Bob"}]'></textarea>
+            <textarea id="json-input" className="w-full h-64 p-6 border-2 border-slate-100 rounded-3xl font-mono text-sm focus:ring-4 focus:ring-emerald-100 outline-none shadow-inner bg-slate-50/30" placeholder='[{"name": "Alice"}, {"name": "Bob"}]'></textarea>
             {!result ? (
-              <button onClick={handleJSONToExcel} disabled={isProcessing} className="w-full py-6 bg-indigo-600 text-white font-black rounded-3xl shadow-2xl hover:bg-indigo-700 transition-all flex items-center justify-center text-lg gap-3">
+              <button onClick={handleJSONToExcel} disabled={isProcessing} className="w-full py-6 bg-emerald-600 text-white font-black rounded-3xl shadow-2xl hover:bg-emerald-700 transition-all flex items-center justify-center text-lg gap-3">
                 <FileJson className="w-6 h-6" /> Convert to Excel
               </button>
             ) : (
@@ -725,14 +726,14 @@ const App: React.FC = () => {
         return (
           <div className="space-y-8">
              <label className="group relative block cursor-pointer">
-              <div className="border-3 border-dashed border-slate-200 group-hover:border-indigo-400 rounded-3xl p-16 transition-all bg-slate-50/50 group-hover:bg-indigo-50/50 flex flex-col items-center justify-center text-center">
-                <Scissors className="w-12 h-12 text-indigo-500 mb-6 group-hover:scale-110 transition-transform" />
+              <div className="border-3 border-dashed border-slate-200 group-hover:border-emerald-400 rounded-3xl p-16 transition-all bg-slate-50/50 group-hover:bg-emerald-50/50 flex flex-col items-center justify-center text-center">
+                <Scissors className="w-12 h-12 text-emerald-500 mb-6 group-hover:scale-110 transition-transform" />
                 <p className="text-2xl font-black text-slate-800">{files.length > 0 ? files[0].name : "Upload Excel to Split"}</p>
                 <input type="file" accept=".xlsx,.xls" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
               </div>
             </label>
             {files.length > 0 && !result && (
-              <button onClick={handleSplitter} disabled={isProcessing} className="w-full py-6 bg-indigo-600 text-white font-black rounded-3xl shadow-2xl hover:bg-indigo-700 transition-all flex items-center justify-center text-lg gap-3">
+              <button onClick={handleSplitter} disabled={isProcessing} className="w-full py-6 bg-emerald-600 text-white font-black rounded-3xl shadow-2xl hover:bg-emerald-700 transition-all flex items-center justify-center text-lg gap-3">
                 <Scissors className="w-6 h-6" /> Split by Sheets
               </button>
             )}
@@ -748,8 +749,8 @@ const App: React.FC = () => {
         return (
           <div className="p-2 md:p-10">
             <label className="group relative block cursor-pointer">
-              <div className="border-3 border-dashed border-slate-200 group-hover:border-indigo-400 rounded-3xl p-12 md:p-20 transition-all bg-slate-50/50 group-hover:bg-indigo-50/50 flex flex-col items-center justify-center text-center">
-                <Upload className="w-16 h-16 text-indigo-500 mb-8 group-hover:scale-110 transition-transform" />
+              <div className="border-3 border-dashed border-slate-200 group-hover:border-emerald-400 rounded-3xl p-12 md:p-20 transition-all bg-slate-50/50 group-hover:bg-emerald-50/50 flex flex-col items-center justify-center text-center">
+                <Upload className="w-16 h-16 text-emerald-500 mb-8 group-hover:scale-110 transition-transform" />
                 <p className="text-2xl md:text-3xl font-black text-slate-800">Drop files or click to upload</p>
                 <p className="text-slate-400 mt-4 text-lg font-medium italic">Supports XLSX, XLS, and CSV</p>
                 <input type="file" multiple accept=".xlsx,.xls,.csv" onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
@@ -761,7 +762,7 @@ const App: React.FC = () => {
                 <div className="flex justify-between items-center mb-8">
                   <h3 className="text-2xl font-black text-slate-800 flex items-center gap-3">
                     Queue 
-                    <span className="bg-indigo-100 text-indigo-600 text-sm px-3 py-1 rounded-full">{files.length}</span>
+                    <span className="bg-emerald-100 text-emerald-600 text-sm px-3 py-1 rounded-full">{files.length}</span>
                   </h3>
                   <button onClick={clear} className="text-sm text-slate-400 hover:text-red-500 transition-colors font-black uppercase tracking-widest">Remove All</button>
                 </div>
@@ -770,8 +771,8 @@ const App: React.FC = () => {
                   {files.map((file) => (
                     <div key={file.id} className="flex items-center justify-between p-5 bg-white rounded-2xl border border-slate-100 shadow-sm">
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center">
-                          <FileSpreadsheet className="w-6 h-6 text-indigo-500" />
+                        <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center">
+                          <FileSpreadsheet className="w-6 h-6 text-emerald-500" />
                         </div>
                         <div className="truncate max-w-[200px] md:max-w-md">
                           <p className="text-base font-bold text-slate-800">{file.name}</p>
@@ -787,7 +788,7 @@ const App: React.FC = () => {
 
                 <div className="bg-slate-50/80 rounded-[40px] p-8 border border-slate-100 mb-10">
                   <div className="flex items-center gap-3 mb-8 text-slate-800 font-black text-lg">
-                    <Settings className="w-6 h-6 text-indigo-500" />
+                    <Settings className="w-6 h-6 text-emerald-500" />
                     Merge Settings
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -797,16 +798,16 @@ const App: React.FC = () => {
                         type="text" 
                         value={options.sheetName} 
                         onChange={(e) => setOptions(p => ({...p, sheetName: e.target.value}))} 
-                        className="w-full px-6 py-4 bg-white border-2 border-slate-100 rounded-2xl text-lg font-bold outline-none focus:ring-4 focus:ring-indigo-100 transition-all"
+                        className="w-full px-6 py-4 bg-white border-2 border-slate-100 rounded-2xl text-lg font-bold outline-none focus:ring-4 focus:ring-emerald-100 transition-all"
                       />
                     </div>
                     <div className="space-y-5 flex flex-col justify-center">
                       <label className="flex items-center gap-4 cursor-pointer group">
-                        <input type="checkbox" checked={options.addSourceColumn} onChange={(e) => setOptions(p => ({...p, addSourceColumn: e.target.checked}))} className="w-6 h-6 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+                        <input type="checkbox" checked={options.addSourceColumn} onChange={(e) => setOptions(p => ({...p, addSourceColumn: e.target.checked}))} className="w-6 h-6 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
                         <span className="text-lg font-bold text-slate-600 group-hover:text-slate-900 transition-colors">Track source filename</span>
                       </label>
                       <label className="flex items-center gap-4 cursor-pointer group">
-                        <input type="checkbox" checked={options.removeDuplicates} onChange={(e) => setOptions(p => ({...p, removeDuplicates: e.target.checked}))} className="w-6 h-6 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+                        <input type="checkbox" checked={options.removeDuplicates} onChange={(e) => setOptions(p => ({...p, removeDuplicates: e.target.checked}))} className="w-6 h-6 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
                         <span className="text-lg font-bold text-slate-600 group-hover:text-slate-900 transition-colors">Unique rows only</span>
                       </label>
                     </div>
@@ -814,7 +815,7 @@ const App: React.FC = () => {
                 </div>
 
                 {!result ? (
-                  <button onClick={handleMergeAction} disabled={isProcessing} className="w-full py-8 bg-indigo-600 text-white font-black text-2xl rounded-3xl shadow-2xl hover:bg-indigo-700 hover:scale-[1.01] transition-all flex items-center justify-center gap-4">
+                  <button onClick={handleMergeAction} disabled={isProcessing} className="w-full py-8 bg-emerald-600 text-white font-black text-2xl rounded-3xl shadow-2xl hover:bg-emerald-700 hover:scale-[1.01] transition-all flex items-center justify-center gap-4">
                     {isProcessing ? "Processing..." : "Merge All Files"} 
                     {!isProcessing && <ArrowRight className="w-8 h-8" />}
                   </button>
@@ -834,14 +835,117 @@ const App: React.FC = () => {
   };
 
   const renderView = () => {
-    if (['privacy', 'terms', 'gdpr', 'cookie'].includes(view)) {
+    if (view === 'privacy') {
+      return (
+        <div className="py-12 md:py-24 max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-[48px] shadow-2xl border border-slate-100 p-8 md:p-20">
+            <h1 className="text-5xl font-black text-slate-900 mb-12 tracking-tighter">Privacy Policy</h1>
+            <div className="prose prose-slate max-w-none text-slate-600 text-lg font-medium leading-relaxed space-y-8">
+              <p>At ExcelMerge Pro, accessible from https://mergeexcelfiles.online, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by ExcelMerge Pro and how we use it.</p>
+              
+              <p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us at foxigaoqian@gmail.com.</p>
+              
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Log Files</h2>
+              <p>ExcelMerge Pro follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Cookies and Web Beacons</h2>
+              <p>Like any other website, ExcelMerge Pro uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Local Processing Notice</h2>
+              <p>ExcelMerge Pro is a local-first utility. This means that any spreadsheet data, Excel files, or CSV records you process using our tools are handled entirely within your browser's memory. We do not upload your data to our servers, and we do not store your private business information. Your files stay on your machine.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Privacy Policies</h2>
+              <p>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on ExcelMerge Pro, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</p>
+              <p>Note that ExcelMerge Pro has no access to or control over these cookies that are used by third-party advertisers.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Third Party Privacy Policies</h2>
+              <p>ExcelMerge Pro's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Children's Information</h2>
+              <p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</p>
+              <p>ExcelMerge Pro does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Online Privacy Policy Only</h2>
+              <p>This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in ExcelMerge Pro. This policy is not applicable to any information collected offline or via channels other than this website.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Consent</h2>
+              <p>By using our website, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (view === 'terms') {
+      return (
+        <div className="py-12 md:py-24 max-w-4xl mx-auto px-4">
+          <div className="bg-white rounded-[48px] shadow-2xl border border-slate-100 p-8 md:p-20">
+            <h1 className="text-5xl font-black text-slate-900 mb-12 tracking-tighter">Terms and Conditions</h1>
+            <div className="prose prose-slate max-w-none text-slate-600 text-lg font-medium leading-relaxed space-y-8">
+              <p>Welcome to mergeexcelfiles.online!</p>
+              <p>These terms and conditions outline the rules and regulations for the use of mergeexcelfiles.online's Website, located at https://mergeexcelfiles.online.</p>
+              <p>By accessing this website we assume you accept these terms and conditions. Do not continue to use mergeexcelfiles.online if you do not agree to take all of the terms and conditions stated on this page.</p>
+              
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Cookies</h2>
+              <p>We employ the use of cookies. By accessing mergeexcelfiles.online, you agreed to use cookies in agreement with the mergeexcelfiles.online's Privacy Policy.</p>
+              <p>Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used by our website to enable the functionality of certain areas to make it easier for people visiting our website. Some of our affiliate/advertising partners may also use cookies.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">License</h2>
+              <p>Unless otherwise stated, mergeexcelfiles.online and/or its licensors own the intellectual property rights for all material on mergeexcelfiles.online. All intellectual property rights are reserved. You may access this from mergeexcelfiles.online for your own personal use subjected to restrictions set in these terms and conditions.</p>
+              <p>You must not:</p>
+              <ul className="list-disc ml-6 space-y-2">
+                <li>Republish material from mergeexcelfiles.online</li>
+                <li>Sell, rent or sub-license material from mergeexcelfiles.online</li>
+                <li>Reproduce, duplicate or copy material from mergeexcelfiles.online</li>
+                <li>Redistribute content from mergeexcelfiles.online</li>
+              </ul>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Hyperlinking to our Content</h2>
+              <p>The following organizations may link to our Website without prior written approval:</p>
+              <ul className="list-disc ml-6 space-y-2">
+                <li>Government agencies;</li>
+                <li>Search engines;</li>
+                <li>News organizations;</li>
+                <li>Online directory distributors may link to our Website in the same manner as they hyperlink to the Websites of other listed businesses; and</li>
+                <li>System wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and charity fundraising groups which may not hyperlink to our Web site.</li>
+              </ul>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">iFrames</h2>
+              <p>Without prior approval and written permission, you may not create frames around our Webpages that alter in any way the visual presentation or appearance of our Website.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Content Liability</h2>
+              <p>We shall not be hold responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Reservation of Rights</h2>
+              <p>We reserve the right to request that you remove all links or any particular link to our Website. You approve to immediately remove all links to our Website upon request. We also reserve the right to amen these terms and conditions and it's linking policy at any time. By continuously linking to our Website, you agree to be bound to and follow these linking terms and conditions.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Removal of links from our website</h2>
+              <p>If you find any link on our Website that is offensive for any reason, you are free to contact and inform us at any moment at foxigaoqian@gmail.com. We will consider requests to remove links but we are not obligated to or so or to respond to you directly.</p>
+
+              <h2 className="text-2xl font-black text-slate-800 mt-12 mb-4">Disclaimer</h2>
+              <p>To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. Nothing in this disclaimer will:</p>
+              <ul className="list-disc ml-6 space-y-2">
+                <li>limit or exclude our or your liability for death or personal injury;</li>
+                <li>limit or exclude our or your liability for fraud or fraudulent misrepresentation;</li>
+                <li>limit any of our or your liabilities in any way that is not permitted under applicable law; or</li>
+                <li>exclude any of our or your liabilities that may not be excluded under applicable law.</li>
+              </ul>
+              <p>As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (['gdpr', 'cookie'].includes(view)) {
       return (
         <div className="py-24 max-w-4xl mx-auto px-4">
           <div className="bg-white rounded-[48px] shadow-2xl border border-slate-100 p-12 md:p-20">
             <h1 className="text-5xl font-black text-slate-900 mb-12 capitalize tracking-tighter">{view} Policy</h1>
-            <div className="prose prose-slate max-w-none text-slate-600 text-lg">
-              <p>Your privacy is our priority. Since all processing is local, your data is never stored on our servers.</p>
-              <p className="mt-6">This site uses only essential browser storage to process your files. No analytical cookies or trackers are used without your explicit consent.</p>
+            <div className="prose prose-slate max-w-none text-slate-600 text-lg font-medium leading-relaxed">
+              <p>Your satisfaction and legal safety are our priorities. We are currently finalizing the full text for our {view} documentation to ensure it meets the highest standards of clarity and compliance.</p>
+              <p className="mt-6">In the meantime, rest assured that mergeexcelfiles.online is built on a "Privacy by Design" principle. All data processing occurs locally on your device, and no user spreadsheets are ever transmitted to our servers.</p>
+              <p className="mt-6">For urgent inquiries regarding our {view} practices, please contact us at foxigaoqian@gmail.com.</p>
             </div>
           </div>
         </div>
@@ -856,7 +960,7 @@ const App: React.FC = () => {
           <div className="py-12 md:py-24 px-4 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
             <button 
               onClick={() => setSelectedPostId(null)}
-              className="flex items-center gap-2 text-indigo-600 font-black mb-12 hover:translate-x-[-4px] transition-transform"
+              className="flex items-center gap-2 text-emerald-600 font-black mb-12 hover:translate-x-[-4px] transition-transform"
             >
               <ArrowLeft className="w-5 h-5" /> Back to Blog
             </button>
@@ -870,13 +974,13 @@ const App: React.FC = () => {
                 <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-10 leading-tight tracking-tight">
                   {selectedPost.title}
                 </h1>
-                <div className="prose prose-slate max-w-none prose-lg prose-indigo prose-headings:font-black prose-headings:tracking-tight prose-p:leading-loose">
+                <div className="prose prose-slate max-w-none prose-lg prose-emerald prose-headings:font-black prose-headings:tracking-tight prose-p:leading-loose">
                   {selectedPost.content.split('\n').map((para, i) => (
                     para.startsWith('###') ? 
                       <h3 key={i} className="text-2xl font-black text-slate-800 mt-12 mb-6">{para.replace('###', '')}</h3> :
                     para.startsWith('1.') || para.startsWith('2.') || para.startsWith('3.') || para.startsWith('4.') ?
                       <div key={i} className="flex gap-4 mb-4">
-                        <span className="font-black text-indigo-600">{para.split(' ')[0]}</span>
+                        <span className="font-black text-emerald-600">{para.split(' ')[0]}</span>
                         <p className="font-medium text-slate-600">{para.split(' ').slice(1).join(' ')}</p>
                       </div> :
                     para.startsWith('-') ?
@@ -886,7 +990,7 @@ const App: React.FC = () => {
                 </div>
                 <div className="mt-16 pt-10 border-t border-slate-100 flex justify-between items-center">
                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center font-black text-indigo-600">
+                      <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center font-black text-emerald-600">
                         {selectedPost.author.charAt(0)}
                       </div>
                       <div>
@@ -896,7 +1000,7 @@ const App: React.FC = () => {
                    </div>
                    <button 
                     onClick={() => { setView('home'); window.scrollTo(0, 0); }}
-                    className="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-black hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-100"
+                    className="bg-emerald-600 text-white px-8 py-3 rounded-2xl font-black hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-100"
                    >
                     Try Tool Now
                    </button>
@@ -911,7 +1015,7 @@ const App: React.FC = () => {
         <div className="space-y-24">
           <section className="pt-24 pb-16 px-4">
             <div className="max-w-5xl mx-auto text-center mb-16">
-              <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter">Data <span className="text-indigo-600">Blog</span></h1>
+              <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter">Data <span className="text-emerald-600">Blog</span></h1>
               <p className="text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">Expert tips and guides for ExcelMerge Pro power users.</p>
             </div>
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -925,10 +1029,10 @@ const App: React.FC = () => {
                     <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <div className="p-8">
-                    <div className="text-xs font-black text-indigo-500 uppercase tracking-widest mb-3">{post.date}</div>
-                    <h2 className="text-2xl font-black text-slate-800 mb-4 leading-tight group-hover:text-indigo-600 transition-colors">{post.title}</h2>
+                    <div className="text-xs font-black text-emerald-500 uppercase tracking-widest mb-3">{post.date}</div>
+                    <h2 className="text-2xl font-black text-slate-800 mb-4 leading-tight group-hover:text-emerald-600 transition-colors">{post.title}</h2>
                     <p className="text-slate-500 mb-6 leading-relaxed line-clamp-3">{post.excerpt}</p>
-                    <div className="flex items-center gap-2 text-indigo-600 font-bold">Read Full Guide <ArrowRight className="w-4 h-4" /></div>
+                    <div className="flex items-center gap-2 text-emerald-600 font-bold">Read Full Guide <ArrowRight className="w-4 h-4" /></div>
                   </div>
                 </article>
               ))}
@@ -940,22 +1044,49 @@ const App: React.FC = () => {
     }
 
     return (
-      <div className="space-y-24">
-        <section className="pt-24 pb-16 px-4">
-          <div className="max-w-5xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black uppercase tracking-widest mb-10">
-              <Zap className="w-4 h-4" /> 100% Free & Local
+      <div className="space-y-16 md:space-y-24">
+        <section className="pt-16 pb-16 px-4">
+          <div className="max-w-5xl mx-auto text-center mb-10">
+            {/* Tool Icon - Refined rounded square style */}
+            <div className="flex justify-center mb-8">
+              <div className="w-16 h-16 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex items-center justify-center border border-slate-100 transition-transform hover:scale-105">
+                <FileSpreadsheet className="w-9 h-9 text-emerald-500" />
+              </div>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-8 tracking-tighter leading-[1.1]">
+
+            {/* Badge - Match screenshot colors */}
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#f0f3ff] text-slate-700 text-xs font-bold mb-8 border border-[#e0e7ff] shadow-sm">
+              100% Free • No Registration Required
+            </div>
+
+            {/* Main Title - Specific Green to Brown to Orange gradient */}
+            <h1 className="text-5xl md:text-[92px] font-black mb-10 tracking-tight leading-[0.95] text-transparent bg-clip-text bg-gradient-to-r from-[#00966d] via-[#858b29] to-[#f2711c]">
               {content.title}
             </h1>
-            <p className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto font-medium leading-relaxed">
+
+            {/* Subtitle - Grey/Slate with comfortable width */}
+            <p className="text-lg md:text-[22px] text-slate-500 max-w-[860px] mx-auto font-medium leading-[1.6] mb-12">
               {content.subtitle}
             </p>
+
+            {/* Feature Highlights - Centered checkmarks */}
+            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-4 text-slate-600 font-bold text-[17px]">
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-emerald-500" strokeWidth={2.5} /> No file size limits
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-emerald-500" strokeWidth={2.5} /> Multiple file formats
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="w-5 h-5 text-emerald-500" strokeWidth={2.5} /> 100% secure & private
+              </div>
+            </div>
           </div>
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-white rounded-[48px] shadow-[0_32px_128px_-16px_rgba(79,70,229,0.12)] border border-slate-100 overflow-hidden">
-              <div className="p-4 md:p-12">
+
+          {/* Main Upload Area */}
+          <div className="max-w-4xl mx-auto mt-20">
+            <div className="bg-white rounded-[48px] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.08)] border border-slate-100 overflow-hidden">
+              <div className="p-4 md:p-14">
                 {renderToolSpecificInterface()}
               </div>
             </div>
@@ -970,10 +1101,10 @@ const App: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
               <div className="bg-slate-50 p-12 rounded-[40px] border border-slate-100 flex items-center justify-center">
                 <div className="grid grid-cols-2 gap-6">
-                  <div className="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center"><FileSpreadsheet className="w-10 h-10 text-indigo-500" /></div>
-                  <div className="w-20 h-20 bg-indigo-500 rounded-3xl shadow-sm flex items-center justify-center"><ArrowRight className="w-10 h-10 text-white" /></div>
+                  <div className="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center"><FileSpreadsheet className="w-10 h-10 text-emerald-500" /></div>
+                  <div className="w-20 h-20 bg-emerald-500 rounded-3xl shadow-sm flex items-center justify-center"><ArrowRight className="w-10 h-10 text-white" /></div>
                   <div className="w-20 h-20 bg-slate-200 rounded-3xl shadow-sm flex items-center justify-center"><Download className="w-10 h-10 text-slate-400" /></div>
-                  <div className="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center"><FileText className="w-10 h-10 text-indigo-500" /></div>
+                  <div className="w-20 h-20 bg-white rounded-3xl shadow-sm border border-slate-100 flex items-center justify-center"><FileText className="w-10 h-10 text-emerald-500" /></div>
                 </div>
               </div>
               <div className="space-y-6">
@@ -991,10 +1122,10 @@ const App: React.FC = () => {
               <p className="text-xl text-slate-500">Process your spreadsheets in three simple steps.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-16 relative">
-              <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-1 bg-indigo-50 z-0"></div>
+              <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-1 bg-emerald-50 z-0"></div>
               {content.steps.map((step) => (
                 <div key={step.n} className="relative z-10 flex flex-col items-center text-center group">
-                  <div className="w-24 h-24 bg-white border-8 border-indigo-50 rounded-full flex items-center justify-center text-3xl font-black text-indigo-600 shadow-xl mb-8 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                  <div className="w-24 h-24 bg-white border-8 border-emerald-50 rounded-full flex items-center justify-center text-3xl font-black text-emerald-600 shadow-xl mb-8 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
                     {step.n}
                   </div>
                   <h3 className="text-2xl font-black text-slate-800 mb-4">{step.t}</h3>
@@ -1010,7 +1141,7 @@ const App: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {content.features.map((f, i) => (
                 <div key={i} className="bg-slate-800 p-10 rounded-[40px] border border-slate-700">
-                  <div className="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center mb-8"><f.icon className="w-8 h-8 text-white" /></div>
+                  <div className="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center mb-8"><f.icon className="w-8 h-8 text-white" /></div>
                   <h3 className="text-2xl font-black mb-4">{f.title}</h3>
                   <p className="text-slate-400 leading-loose">{f.desc}</p>
                 </div>
