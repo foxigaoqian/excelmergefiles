@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { 
   FileSpreadsheet, Upload, Trash2, Settings, Download, ArrowRight,
@@ -179,8 +178,98 @@ const App: React.FC = () => {
       </nav>
 
       {/* Conditional Content Views */}
-      {view === 'privacy' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in"><h1 className="text-4xl font-black mb-8 text-slate-900 uppercase">Privacy Policy</h1><div className="prose text-slate-600 font-medium space-y-6"><p>At MergeExcelFiles.online, we prioritize your data security above all else. Our tool operates entirely within your browser environment. This means that when you select your spreadsheets, they are read locally by your device's CPU and RAM. We do not transmit, upload, or store your file content on any remote servers. Your privacy is guaranteed by our architecture.</p><button onClick={() => navigateTo('home')} className="px-6 py-3 bg-slate-900 text-white rounded-xl font-bold">Back to Tool</button></div></div>}
-      {view === 'terms' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in"><h1 className="text-4xl font-black mb-8 text-slate-900 uppercase">Terms of Service</h1><div className="prose text-slate-600 font-medium space-y-6"><p>This service is provided free of charge for both individual and commercial use. Users are responsible for ensuring they have backups of their original data before processing. We are not liable for any data loss or corruption. By using this tool, you agree that processing happens locally and results depend on your system performance.</p><button onClick={() => navigateTo('home')} className="px-6 py-3 bg-slate-900 text-white rounded-xl font-bold">Back to Tool</button></div></div>}
+      {view === 'privacy' && (
+        <div className="max-w-4xl mx-auto py-20 px-6 animate-in">
+          <h1 className="text-4xl font-black mb-12 text-slate-900 uppercase tracking-tighter">Privacy Policy</h1>
+          <div className="prose prose-slate max-w-none font-medium text-slate-600 space-y-8">
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">1. Introduction</h2>
+              <p>Welcome to MergeExcelFiles.online. Your privacy is critically important to us. This policy outlines how we handle data and what information we collect when you use our service.</p>
+            </section>
+            
+            <section className="bg-emerald-50 p-8 rounded-3xl border border-emerald-100">
+              <h2 className="text-2xl font-black text-emerald-900 uppercase mb-4">2. Zero Data Upload Policy</h2>
+              <p className="text-emerald-800">The most important aspect of our service is that <strong>your files are never uploaded to our servers</strong>. All processing is done locally within your web browser using JavaScript and WebAssembly. Your data never leaves your computer.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">3. Information We Collect</h2>
+              <p>We do not collect personal information or file data. We may collect non-identifiable usage statistics (such as page views or tool usage frequency) to help us improve the service, usually via standard web analytics that do not identify you personally.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">4. Cookies</h2>
+              <p>We use essential cookies to ensure the basic functionality of the site. We may also use third-party analytics cookies to understand how users interact with our tool. You can choose to disable cookies in your browser settings, though this may affect site performance.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">5. Third-Party Services</h2>
+              <p>Our site may contain links to other websites or use third-party components (like font hosting or analytics). These services have their own privacy policies which we encourage you to review.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">6. Security</h2>
+              <p>Because your data stays on your device, it is inherently more secure than traditional cloud-based tools. We recommend using an updated, secure browser to maintain maximum privacy.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">7. Contact Us</h2>
+              <p>If you have questions about this Privacy Policy, please contact us at support@mergeexcelfiles.online.</p>
+            </section>
+          </div>
+          <button onClick={() => navigateTo('home')} className="mt-12 px-8 py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-sm btn-shadow">Back to Home</button>
+        </div>
+      )}
+
+      {view === 'terms' && (
+        <div className="max-w-4xl mx-auto py-20 px-6 animate-in">
+          <h1 className="text-4xl font-black mb-12 text-slate-900 uppercase tracking-tighter">Terms of Service</h1>
+          <div className="prose prose-slate max-w-none font-medium text-slate-600 space-y-8">
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">1. Acceptance of Terms</h2>
+              <p>By accessing and using MergeExcelFiles.online, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using this site.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">2. Description of Service</h2>
+              <p>MergeExcelFiles.online provides web-based tools for merging, splitting, and converting spreadsheet files. The service is provided "as is" and "as available". We reserve the right to modify or discontinue the service at any time without notice.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">3. Use License</h2>
+              <p>Permission is granted to use the tools on MergeExcelFiles.online for personal or commercial purposes. This is the grant of a license, not a transfer of title, and under this license, you may not:</p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Attempt to decompile or reverse engineer any software contained on the website;</li>
+                <li>Remove any copyright or other proprietary notations from the materials;</li>
+                <li>Use the site for any unlawful purpose.</li>
+              </ul>
+            </section>
+
+            <section className="bg-slate-50 p-8 rounded-3xl border border-slate-200">
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">4. Disclaimer & Liability</h2>
+              <p className="font-bold mb-4">MERGEEXCELFILES.ONLINE MAKES NO WARRANTIES, EXPRESSED OR IMPLIED, AND HEREBY DISCLAIMS AND NEGATES ALL OTHER WARRANTIES.</p>
+              <p>In no event shall MergeExcelFiles.online or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on our website.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">5. User Data Responsibility</h2>
+              <p>Users are solely responsible for the content of their files. Since processing is local, we cannot recover any files or data if you experience a system crash or browser error during use. Please ensure you have backups of your original data.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">6. Revisions and Errata</h2>
+              <p>The materials appearing on MergeExcelFiles.online could include technical, typographical, or photographic errors. We do not warrant that any of the materials on its website are accurate, complete, or current.</p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">7. Governing Law</h2>
+              <p>Any claim relating to MergeExcelFiles.online's website shall be governed by the laws of the jurisdiction in which the service operator resides, without regard to its conflict of law provisions.</p>
+            </section>
+          </div>
+          <button onClick={() => navigateTo('home')} className="mt-12 px-8 py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-sm btn-shadow">Back to Home</button>
+        </div>
+      )}
+
       {view === 'contact' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in text-center"><h1 className="text-4xl font-black mb-8 text-slate-900 uppercase">Contact Support</h1><p className="text-xl text-slate-500 font-bold mb-8">Got questions? Reach out to our technical team.</p><div className="inline-block p-8 bg-slate-50 border border-slate-100 rounded-3xl"><a href="mailto:support@mergeexcelfiles.online" className="text-2xl font-black text-slate-900 hover:text-indigo-600 transition-colors">support@mergeexcelfiles.online</a></div><div className="mt-8"><button onClick={() => navigateTo('home')} className="text-slate-400 font-bold hover:text-slate-900">Return to Homepage</button></div></div>}
 
       {view === 'home' && (
