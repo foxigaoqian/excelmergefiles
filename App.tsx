@@ -214,7 +214,7 @@ const App: React.FC = () => {
 
             <section>
               <h2 className="text-2xl font-black text-slate-900 uppercase mb-4">7. Contact Us</h2>
-              <p>If you have questions about this Privacy Policy, please contact us at support@mergeexcelfiles.online.</p>
+              <p>If you have questions about this Privacy Policy, please contact us at foxigaoqian@gmail.com.</p>
             </section>
           </div>
           <button onClick={() => navigateTo('home')} className="mt-12 px-8 py-4 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-widest text-sm btn-shadow">Back to Home</button>
