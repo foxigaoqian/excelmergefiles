@@ -1,0 +1,10 @@
+# robots.txt for https://www.mergeexcelfiles.online/
+User-agent: *
+# 允许所有正常内容抓取
+Allow: /
+
+# Crawl-delay 以秒为单位，控制抓取频率（可选）
+Crawl-delay: 10
+
+# 站点地图位置（指向 sitemap.txt 或 sitemap.xml）
+Sitemap: https://www.mergeexcelfiles.online/sitemap.txt
