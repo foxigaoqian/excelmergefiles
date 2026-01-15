@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
   FileSpreadsheet, Upload, Trash2, Settings, Download, ArrowRight,
-  ShieldCheck, Zap, ChevronDown, Scissors, FileText, FileCode,
-  LayoutGrid, Database, Star, ChevronUp, CheckCircle, Menu, X, Lock, Globe, Mail,
-  Cpu, MousePointer2, Layers, AlertCircle
+  ShieldCheck, Zap, ChevronDown, MousePointer2, Layers, Cpu, 
+  LayoutGrid, ChevronUp, CheckCircle, Menu, X, Lock, Mail,
+  BarChart3, ShieldAlert, Globe2
 } from 'lucide-react';
 import { FileItem, MergeOptions, ToolType, SplitOptions } from './types';
 import { 
@@ -113,10 +113,7 @@ const App: React.FC = () => {
   const navigateTo = (p: PageView) => {
     setView(p);
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  // --- Layout Components ---
 
   const NavLogo = () => (
     <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigateTo('home')}>
@@ -146,31 +143,31 @@ const App: React.FC = () => {
         </button>
       </nav>
 
-      {/* Main Content Conditional Views */}
-      {view === 'privacy' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in"><h1 className="text-4xl font-black mb-8 text-slate-900">Privacy Policy</h1><div className="prose text-slate-600 space-y-4 font-medium"><p>All processing is local. We don't upload files.</p><button onClick={() => navigateTo('home')} className="mt-8 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold">Back Home</button></div></div>}
-      {view === 'terms' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in"><h1 className="text-4xl font-black mb-8 text-slate-900">Terms of Service</h1><div className="prose text-slate-600 space-y-4 font-medium"><p>Free to use, as-is, no guarantee. Don't be evil.</p><button onClick={() => navigateTo('home')} className="mt-8 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold">Back Home</button></div></div>}
-      {view === 'contact' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in text-center"><h1 className="text-4xl font-black mb-8 text-slate-900">Contact Us</h1><p className="text-xl text-slate-500 font-bold mb-4">support@mergeexcelfiles.online</p><button onClick={() => navigateTo('home')} className="mt-8 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold">Back Home</button></div>}
+      {/* Conditional Content Views */}
+      {view === 'privacy' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in"><h1 className="text-4xl font-black mb-8 text-slate-900 uppercase">Privacy Policy</h1><div className="prose text-slate-600 font-medium space-y-6"><p>At MergeExcelFiles.online, we prioritize your data security above all else. Our tool operates entirely within your browser environment. This means that when you select your spreadsheets, they are read locally by your device's CPU and RAM. We do not transmit, upload, or store your file content on any remote servers. Your privacy is guaranteed by our architecture.</p><button onClick={() => navigateTo('home')} className="px-6 py-3 bg-slate-900 text-white rounded-xl font-bold">Back to Tool</button></div></div>}
+      {view === 'terms' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in"><h1 className="text-4xl font-black mb-8 text-slate-900 uppercase">Terms of Service</h1><div className="prose text-slate-600 font-medium space-y-6"><p>This service is provided free of charge for both individual and commercial use. Users are responsible for ensuring they have backups of their original data before processing. We are not liable for any data loss or corruption. By using this tool, you agree that processing happens locally and results depend on your system performance.</p><button onClick={() => navigateTo('home')} className="px-6 py-3 bg-slate-900 text-white rounded-xl font-bold">Back to Tool</button></div></div>}
+      {view === 'contact' && <div className="max-w-4xl mx-auto py-20 px-6 animate-in text-center"><h1 className="text-4xl font-black mb-8 text-slate-900 uppercase">Contact Support</h1><p className="text-xl text-slate-500 font-bold mb-8">Got questions? Reach out to our technical team.</p><div className="inline-block p-8 bg-slate-50 border border-slate-100 rounded-3xl"><a href="mailto:support@mergeexcelfiles.online" className="text-2xl font-black text-slate-900 hover:text-indigo-600 transition-colors">support@mergeexcelfiles.online</a></div><div className="mt-8"><button onClick={() => navigateTo('home')} className="text-slate-400 font-bold hover:text-slate-900">Return to Homepage</button></div></div>}
 
       {view === 'home' && (
         <>
-          {/* 1. TOOL SECTION (Hero) */}
+          {/* TOOL SECTION */}
           <section className="pt-16 pb-24 px-6 border-b border-slate-50">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 animate-in">
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-black uppercase tracking-widest mb-6">
-                  <Lock className="w-3 h-3" /> Secure Client-Side Engine
+                  <Lock className="w-3 h-3" /> 100% Secure & Client-Side
                 </div>
                 <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 leading-[0.9] mb-6">
                   Merge Excel Files <br className="hidden md:block" /> 
-                  <span className="text-slate-200">Without Uploads.</span>
+                  <span className="text-slate-200">Without Uploading.</span>
                 </h1>
                 <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed">
-                  The professional way to combine XLSX and CSV spreadsheets. 
-                  Zero data leakage, maximum privacy, instant execution.
+                  The most secure online tool to combine multiple XLSX and CSV spreadsheets. 
+                  Privacy-first processing ensures your data never leaves your computer.
                 </p>
               </div>
 
-              {/* Tool Card */}
+              {/* Tool Interaction Card */}
               <div className="bg-white border border-slate-200 rounded-[40px] shadow-2xl overflow-hidden card-shadow">
                 <div className="p-8 md:p-12">
                   <div className="grid lg:grid-cols-5 gap-12">
@@ -181,8 +178,8 @@ const App: React.FC = () => {
                           <div className={`bg-slate-900 rounded-2xl flex items-center justify-center shadow-xl mb-4 transition-all ${files.length > 0 ? 'w-10 h-10' : 'w-16 h-16'}`}>
                             <Upload className="text-white w-6 h-6" />
                           </div>
-                          <span className="font-black text-slate-900 text-xl">
-                            {files.length > 0 ? 'Add more spreadsheets' : 'Drop XLSX / CSV Files'}
+                          <span className="font-black text-slate-900 text-xl text-center px-4">
+                            {files.length > 0 ? 'Add more files to merge' : 'Drag & Drop XLSX / CSV Files'}
                           </span>
                         </div>
                         <input type="file" multiple={activeTool === 'merge'} onChange={handleFileUpload} className="absolute inset-0 opacity-0 cursor-pointer" accept=".xlsx,.xls,.csv" />
@@ -190,12 +187,12 @@ const App: React.FC = () => {
                       {files.length > 0 && (
                         <div className="max-h-60 overflow-y-auto pr-2 space-y-2">
                           {files.map((f, i) => (
-                            <div key={f.id} className="flex items-center gap-4 p-4 bg-slate-50 border border-slate-100 rounded-2xl">
-                              <span className="font-bold text-slate-400 text-xs">{i+1}</span>
+                            <div key={f.id} className="flex items-center gap-4 p-4 bg-slate-50 border border-slate-100 rounded-2xl group">
+                              <span className="font-black text-slate-300 text-xs">{i+1}</span>
                               <p className="font-bold text-slate-900 truncate flex-grow">{f.name}</p>
-                              <div className="flex gap-1">
-                                <button onClick={() => moveFile(i, 'up')} className="p-2"><ChevronUp className="w-4 h-4" /></button>
-                                <button onClick={() => removeFile(f.id)} className="p-2 text-red-400"><Trash2 className="w-4 h-4" /></button>
+                              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button onClick={() => moveFile(i, 'up')} className="p-2 bg-white rounded-lg hover:bg-slate-100 shadow-sm"><ChevronUp className="w-4 h-4" /></button>
+                                <button onClick={() => removeFile(f.id)} className="p-2 bg-white rounded-lg hover:bg-red-50 text-red-400 shadow-sm"><Trash2 className="w-4 h-4" /></button>
                               </div>
                             </div>
                           ))}
@@ -205,23 +202,34 @@ const App: React.FC = () => {
                     <div className="lg:col-span-2">
                       <div className="bg-slate-50 rounded-[32px] p-8 border border-slate-100 h-full flex flex-col">
                         <div className="flex-grow space-y-6">
-                          <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Configuration</label>
-                          <input type="text" value={mergeOptions.sheetName} onChange={e => setMergeOptions({...mergeOptions, sheetName: e.target.value})} className="w-full p-4 bg-white border border-slate-200 rounded-xl font-bold" placeholder="Sheet Name" />
-                          <label className="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200 cursor-pointer">
-                            <input type="checkbox" checked={mergeOptions.addSourceColumn} onChange={e => setMergeOptions({...mergeOptions, addSourceColumn: e.target.checked})} className="w-5 h-5 rounded text-slate-900" />
-                            <span className="font-bold text-slate-700 text-sm">Include Source Column</span>
-                          </label>
+                          <div>
+                            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Project Settings</label>
+                            <input type="text" value={mergeOptions.sheetName} onChange={e => setMergeOptions({...mergeOptions, sheetName: e.target.value})} className="w-full p-4 bg-white border border-slate-200 rounded-xl font-bold focus:ring-2 focus:ring-slate-900 focus:outline-none transition-all" placeholder="Sheet Name" />
+                          </div>
+                          <div className="space-y-3">
+                            <label className="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200 cursor-pointer hover:border-slate-400 transition-all">
+                              <input type="checkbox" checked={mergeOptions.addSourceColumn} onChange={e => setMergeOptions({...mergeOptions, addSourceColumn: e.target.checked})} className="w-5 h-5 rounded text-slate-900 border-slate-300" />
+                              <span className="font-bold text-slate-700 text-sm">Add Filename Column</span>
+                            </label>
+                            <label className="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200 cursor-pointer hover:border-slate-400 transition-all">
+                              <input type="checkbox" checked={mergeOptions.removeDuplicates} onChange={e => setMergeOptions({...mergeOptions, removeDuplicates: e.target.checked})} className="w-5 h-5 rounded text-slate-900 border-slate-300" />
+                              <span className="font-bold text-slate-700 text-sm">Automated Deduplication</span>
+                            </label>
+                          </div>
                         </div>
                         <div className="mt-10">
                           {results.length === 0 ? (
-                            <button onClick={runTool} disabled={files.length === 0 || isProcessing} className="w-full py-5 bg-slate-900 text-white rounded-2xl font-black text-lg btn-shadow flex items-center justify-center gap-3">
-                              {isProcessing ? 'Processing...' : `Merge ${files.length} Files`}
+                            <button onClick={runTool} disabled={files.length === 0 || isProcessing} className="w-full py-5 bg-slate-900 text-white rounded-2xl font-black text-lg btn-shadow flex items-center justify-center gap-3 disabled:opacity-50">
+                              {isProcessing ? 'Combining Data...' : `Merge ${files.length} Files`}
                               <ArrowRight className="w-5 h-5" />
                             </button>
                           ) : (
-                            <button onClick={() => { const url = URL.createObjectURL(results[0].blob); const a = document.createElement('a'); a.href = url; a.download = results[0].name; a.click(); }} className="w-full py-5 bg-emerald-600 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-emerald-200">
-                              <Download className="w-6 h-6" /> Download Now
-                            </button>
+                            <div className="space-y-3">
+                              <button onClick={() => { const url = URL.createObjectURL(results[0].blob); const a = document.createElement('a'); a.href = url; a.download = results[0].name; a.click(); }} className="w-full py-5 bg-emerald-600 text-white rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-emerald-200 hover:bg-emerald-700 transition-colors">
+                                <Download className="w-6 h-6" /> Download Merged Result
+                              </button>
+                              <button onClick={clear} className="w-full py-2 text-slate-400 font-bold text-xs uppercase tracking-widest hover:text-slate-900">Start New Merge</button>
+                            </div>
                           )}
                         </div>
                       </div>
@@ -232,111 +240,145 @@ const App: React.FC = () => {
             </div>
           </section>
 
-          {/* 2. INTRODUCTION */}
-          <section className="py-24 px-6 max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-black tracking-tighter text-slate-900 mb-8">What is MergeExcelFiles.online?</h2>
-            <p className="text-lg text-slate-500 font-medium leading-relaxed">
-              MergeExcelFiles.online is a high-performance, web-based utility designed to solve the common headache of manual spreadsheet consolidation. 
-              We utilize a client-side engine that processes your Excel and CSV workbooks directly within your browser. 
-              This means your sensitive data never touches a remote server, offering bank-grade privacy that cloud-based competitors cannot match.
-              Whether you are an accountant, data analyst, or student, our tool provides a streamlined interface for combining data sets instantly.
-            </p>
+          {/* 1. 工具介绍 (Introduction) */}
+          <section className="py-24 px-6 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              <div>
+                <h2 className="text-4xl font-black tracking-tighter text-slate-900 mb-6 leading-tight">Professional Local-First <br/>Excel Consolidation.</h2>
+                <p className="text-lg text-slate-500 font-medium leading-relaxed mb-6">
+                  MergeExcelFiles.online is a high-performance, browser-native utility designed to solve the common headache of manual data consolidation. We utilize the latest WebAssembly technology to process your workbooks locally.
+                </p>
+                <div className="flex gap-4">
+                   <div className="flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-xs font-black text-slate-900">
+                      <CheckCircle className="w-4 h-4 text-emerald-500" /> No Registration
+                   </div>
+                   <div className="flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-full text-xs font-black text-slate-900">
+                      <CheckCircle className="w-4 h-4 text-emerald-500" /> Mixed Formats
+                   </div>
+                </div>
+              </div>
+              <div className="bg-slate-50 p-10 rounded-[40px] border border-slate-100 relative overflow-hidden group">
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-indigo-100 transition-colors"></div>
+                 <BarChart3 className="w-12 h-12 text-slate-900 mb-6 relative z-10" />
+                 <h3 className="text-xl font-black text-slate-900 mb-4 relative z-10">Data Integrity Guaranteed</h3>
+                 <p className="text-slate-500 font-medium text-sm leading-relaxed relative z-10">Whether you are merging quarterly financial reports or combining customer contact lists, our tool preserves formulas (where possible as values), formatting structures, and data types with surgical precision.</p>
+              </div>
+            </div>
           </section>
 
-          {/* 3. HOW TO USE */}
-          <section className="py-24 px-6 bg-slate-50/50">
+          {/* 2. 如何使用工具 (How to Use) */}
+          <section className="py-24 px-6 bg-[#fafbfc]">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl font-black tracking-tighter text-slate-900 mb-16 text-center">How to Use the Tool</h2>
-              <div className="grid md:grid-cols-3 gap-8">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl font-black tracking-tighter text-slate-900">How to Merge Files in 3 Steps</h2>
+                <p className="text-slate-500 font-medium mt-4">Simple, powerful, and intuitive workflow.</p>
+              </div>
+              <div className="grid md:grid-cols-3 gap-12">
                 {[
-                  { step: "01", icon: <MousePointer2 />, title: "Select Files", desc: "Drag and drop your XLSX, XLS, or CSV files into the upload zone above." },
-                  { step: "02", icon: <Layers />, title: "Arrange Order", desc: "Use the move buttons to define the top-to-bottom order of your merged data." },
-                  { step: "03", icon: <Zap />, title: "Download", desc: "Click Merge and instantly save your new combined master spreadsheet." }
-                ].map((item, i) => (
-                  <div key={i} className="bg-white p-10 rounded-[40px] border border-slate-100 card-shadow text-center">
-                    <div className="w-16 h-16 bg-slate-900 text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                      {item.icon}
+                  { icon: <MousePointer2 className="w-8 h-8"/>, title: "1. Upload", desc: "Select multiple XLSX or CSV files from your computer or drag them into the merge zone." },
+                  { icon: <Layers className="w-8 h-8"/>, title: "2. Configure", desc: "Drag to reorder rows, set the output sheet name, and choose if you want to remove duplicates." },
+                  { icon: <Zap className="w-8 h-8"/>, title: "3. Export", desc: "Click merge and wait a few seconds. Your new master workbook is generated and saved locally." }
+                ].map((step, i) => (
+                  <div key={i} className="relative group">
+                    <div className="w-16 h-16 bg-white border border-slate-100 rounded-3xl flex items-center justify-center mb-8 card-shadow group-hover:bg-slate-900 group-hover:text-white transition-all">
+                      {step.icon}
                     </div>
-                    <div className="text-xs font-black text-slate-300 uppercase tracking-widest mb-2">{item.step}</div>
-                    <h3 className="text-xl font-black text-slate-900 mb-4">{item.title}</h3>
-                    <p className="text-slate-500 font-medium text-sm leading-relaxed">{item.desc}</p>
+                    <h3 className="text-xl font-black text-slate-900 mb-4">{step.title}</h3>
+                    <p className="text-slate-500 font-medium text-sm leading-relaxed">{step.desc}</p>
+                    {i < 2 && <div className="hidden lg:block absolute top-8 -right-4 w-8 h-[2px] bg-slate-100"></div>}
                   </div>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* 4. WHY CHOOSE US */}
+          {/* 3. 为什么选择我们这个工具 (Why Choose Us) */}
           <section className="py-24 px-6">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-4xl font-black tracking-tighter text-slate-900 mb-16 text-center">Why Choose Our Excel Merger?</h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-slate-900 p-10 rounded-[40px] text-white space-y-4">
-                  <ShieldCheck className="w-10 h-10 text-emerald-400" />
-                  <h3 className="text-2xl font-black">Absolute Privacy</h3>
-                  <p className="text-slate-400 font-medium leading-relaxed">Most tools upload your data to a cloud server where it can be stored or compromised. We process everything locally. Your files stay on your device.</p>
-                </div>
-                <div className="bg-white p-10 rounded-[40px] border border-slate-100 card-shadow space-y-4">
-                  <Zap className="w-10 h-10 text-slate-900" />
-                  <h3 className="text-2xl font-black">Lightning Performance</h3>
-                  <p className="text-slate-500 font-medium leading-relaxed">No upload/download lag. By leveraging your local hardware, we can merge hundreds of files faster than any cloud-based alternative.</p>
-                </div>
-                <div className="bg-white p-10 rounded-[40px] border border-slate-100 card-shadow space-y-4">
-                  <FileSpreadsheet className="w-10 h-10 text-slate-900" />
-                  <h3 className="text-2xl font-black">Mixed-Format Support</h3>
-                  <p className="text-slate-500 font-medium leading-relaxed">Need to join a CSV with an XLSX file? Our intelligent converter normalizes all data automatically into a clean Excel structure.</p>
-                </div>
-                <div className="bg-slate-50 p-10 rounded-[40px] border border-slate-200 space-y-4">
-                  <Cpu className="w-10 h-10 text-slate-900" />
-                  <h3 className="text-2xl font-black">No Installation</h3>
-                  <p className="text-slate-500 font-medium leading-relaxed">Get pro-level features without downloading bulky software. Our tool works in any modern browser on Windows, Mac, or Linux.</p>
+              <div className="bg-slate-900 rounded-[60px] p-12 md:p-24 text-white overflow-hidden relative">
+                <div className="absolute bottom-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-[120px]"></div>
+                <div className="grid md:grid-cols-2 gap-16 items-center">
+                  <div>
+                    <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-8 leading-tight">Uncompromising Security <br/>for Professional Data.</h2>
+                    <ul className="space-y-6">
+                      <li className="flex gap-4">
+                        <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center shrink-0"><ShieldCheck className="w-6 h-6 text-emerald-400" /></div>
+                        <div><h4 className="font-black text-lg">Zero Cloud Exposure</h4><p className="text-slate-400 text-sm font-medium">Your private data never touches a server. Perfect for HIPAA or GDPR compliance.</p></div>
+                      </li>
+                      <li className="flex gap-4">
+                        <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center shrink-0"><Cpu className="w-6 h-6 text-emerald-400" /></div>
+                        <div><h4 className="font-black text-lg">Native GPU Acceleration</h4><p className="text-slate-400 text-sm font-medium">We utilize your local hardware to process thousands of rows in milliseconds.</p></div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { l: "Privacy", v: "100%" },
+                      { l: "Latency", v: "0ms" },
+                      { l: "Limit", v: "Unlimited" },
+                      { l: "Cost", v: "$0" }
+                    ].map((stat, i) => (
+                      <div key={i} className="bg-white/5 border border-white/10 p-8 rounded-3xl text-center">
+                        <div className="text-3xl font-black mb-1">{stat.v}</div>
+                        <div className="text-xs font-black uppercase tracking-widest text-slate-500">{stat.l}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* 5. TOOL COMPARISON */}
-          <section className="py-24 px-6 bg-slate-900 text-white">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-4xl font-black tracking-tighter mb-12 text-center">Comparison: Local vs. Cloud Merging</h2>
-              <div className="overflow-hidden border border-slate-800 rounded-3xl">
-                <table className="w-full text-left">
-                  <thead>
-                    <tr className="bg-slate-800/50">
-                      <th className="p-6 font-black uppercase text-xs tracking-widest text-slate-400">Feature</th>
-                      <th className="p-6 font-black uppercase text-xs tracking-widest text-emerald-400">MergeExcelFiles.online</th>
-                      <th className="p-6 font-black uppercase text-xs tracking-widest text-slate-400">Cloud Competitors</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-800 text-sm font-bold">
-                    <tr><td className="p-6">Data Privacy</td><td className="p-6 text-emerald-400">100% Local</td><td className="p-6">Risky Cloud Upload</td></tr>
-                    <tr><td className="p-6">Processing Speed</td><td className="p-6 text-emerald-400">Instant (Local CPU)</td><td className="p-6">Queued (Server Speed)</td></tr>
-                    <tr><td className="p-6">Offline Mode</td><td className="p-6 text-emerald-400">Yes (Once Loaded)</td><td className="p-6">No</td></tr>
-                    <tr><td className="p-6">File Size Limit</td><td className="p-6 text-emerald-400">Device RAM Dependent</td><td className="p-6">Artificial Limits</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          {/* 4. 对比优势 (Advantages vs Others) */}
+          <section className="py-24 px-6 max-w-6xl mx-auto">
+             <div className="text-center mb-16">
+                <h2 className="text-4xl font-black tracking-tighter text-slate-900">MergeExcelFiles vs. The Rest</h2>
+                <p className="text-slate-500 font-medium mt-4">Why local processing wins every single time.</p>
+             </div>
+             <div className="grid md:grid-cols-2 gap-12">
+                <div className="p-10 bg-emerald-50 rounded-[40px] border border-emerald-100">
+                   <h3 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-3">
+                      <CheckCircle className="w-6 h-6 text-emerald-600" /> Our Advantage
+                   </h3>
+                   <ul className="space-y-6">
+                      <li className="font-bold text-slate-700">✓ No upload time - Instant data access</li>
+                      <li className="font-bold text-slate-700">✓ Works offline after page load</li>
+                      <li className="font-bold text-slate-700">✓ No file storage risks or leaks</li>
+                      <li className="font-bold text-slate-700">✓ Handle multiple sheets in one batch</li>
+                   </ul>
+                </div>
+                <div className="p-10 bg-red-50 rounded-[40px] border border-red-100">
+                   <h3 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-3">
+                      <ShieldAlert className="w-6 h-6 text-red-600" /> Traditional Converters
+                   </h3>
+                   <ul className="space-y-6">
+                      <li className="font-bold text-slate-500 line-through">Slow server uploads (Waiting time)</li>
+                      <li className="font-bold text-slate-500 line-through">Requires constant internet connection</li>
+                      <li className="font-bold text-slate-500 line-through">Your data is stored on remote disks</li>
+                      <li className="font-bold text-slate-500 line-through">Usually limited to 1 or 2 files for free</li>
+                   </ul>
+                </div>
+             </div>
           </section>
 
-          {/* 6. 10 FAQS */}
-          <section className="py-24 px-6">
+          {/* 5. 常见问题 (10 FAQs) */}
+          <section className="py-24 px-6 bg-slate-50/30">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-4xl font-black tracking-tighter text-slate-900 mb-12 text-center">Frequently Asked Questions</h2>
-              <div className="space-y-4">
+              <div className="grid gap-4">
                 {[
-                  { q: "Is MergeExcelFiles.online really free?", a: "Yes, our tool is 100% free with no hidden subscription fees or credit systems." },
-                  { q: "Is my data safe with a local merger?", a: "Absolutely. Since your data is processed only in your browser's memory and never sent to a server, it is the safest way to handle confidential files." },
-                  { q: "Which formats can I merge?", a: "You can merge .xlsx, .xls, and .csv files interchangeably." },
-                  { q: "Is there a limit to how many files I can merge?", a: "No, you can select as many files as you need, provided your computer has enough RAM to handle the combined size." },
-                  { q: "Can I merge files with different column headers?", a: "Yes. Our engine intelligently combines all unique columns. If column names don't match, they will simply be appended as new columns in the master sheet." },
-                  { q: "Do I need to sign up or create an account?", a: "No registration is required. You can start merging as soon as the page loads." },
-                  { q: "Does this tool work on Mac?", a: "Yes, it is compatible with all modern browsers (Chrome, Safari, Firefox, Edge) across macOS, Windows, and Linux." },
-                  { q: "Can I remove duplicates while merging?", a: "Yes, simply check the 'Deduplicate Data' option in the config panel before clicking merge." },
-                  { q: "What happens if a file is corrupted?", a: "The tool will skip corrupted files and notify you. We recommend using valid XLSX or CSV formats." },
-                  { q: "How do I contact support for feature requests?", a: "Please email us at support@mergeexcelfiles.online for any feedback or custom requests." }
+                  { q: "Is there a limit to the number of files I can merge?", a: "No, you can merge as many files as your computer's memory can handle. Most modern browsers can handle hundreds of XLSX files simultaneously." },
+                  { q: "Is my data sent to a server?", a: "Never. All processing is done locally via Javascript inside your browser. We have zero access to your spreadsheets." },
+                  { q: "Can I merge different file formats like CSV and XLSX?", a: "Yes, our tool automatically normalizes data from both CSV and XLSX into a single master Excel output." },
+                  { q: "What happens if my files have different column names?", a: "The tool will combine all unique columns. If a file is missing a specific column, those cells will simply remain blank in the final result." },
+                  { q: "Is the tool really free to use?", a: "Yes, MergeExcelFiles.online is 100% free with no hidden costs, daily limits, or paywalls." },
+                  { q: "Does it work on mobile devices?", a: "Yes, the tool is fully responsive and works on modern tablets and smartphones, though desktop browsers are recommended for large batches." },
+                  { q: "How do I ensure the rows are in a specific order?", a: "Once you upload your files, you can use the 'Up' and 'Down' buttons in the file list to set the exact vertical order." },
+                  { q: "Can I remove duplicate rows during the merge?", a: "Yes, just enable the 'Automated Deduplication' toggle in the configuration panel." },
+                  { q: "What is the maximum file size supported?", a: "While we don't set a limit, we recommend individual files stay under 100MB to avoid browser performance issues." },
+                  { q: "Why is local merging better than cloud merging?", a: "Local merging is faster (no upload/download time) and infinitely more secure for sensitive business or personal data." }
                 ].map((faq, i) => (
-                  <details key={i} className="group border border-slate-100 rounded-3xl bg-white p-6 cursor-pointer hover:border-slate-300 transition-all">
+                  <details key={i} className="group bg-white border border-slate-100 p-6 rounded-3xl hover:border-slate-300 transition-all cursor-pointer">
                     <summary className="font-black text-slate-900 list-none flex justify-between items-center group-open:mb-4">
                       {faq.q} <ChevronDown className="w-4 h-4 transition-transform group-open:rotate-180" />
                     </summary>
@@ -349,7 +391,7 @@ const App: React.FC = () => {
         </>
       )}
 
-      {/* FOOTER (SquareFace Pattern - Unchanged Layout) */}
+      {/* FOOTER (Unchanged structure) */}
       <footer className="bg-slate-900 text-white py-16 px-6 text-center">
         <div className="max-w-6xl mx-auto space-y-8">
           <div className="flex flex-col items-center gap-4">
