@@ -1,6 +1,6 @@
 
 import * as XLSX from 'xlsx';
-import { FileItem, MergeOptions } from '../types';
+import { FileItem, MergeOptions, SplitOptions } from '../types';
 
 export const mergeFiles = async (
   fileItems: FileItem[], 
@@ -12,7 +12,6 @@ export const mergeFiles = async (
     const data = await item.file.arrayBuffer();
     const workbook = XLSX.read(data);
     
-    // Process each sheet in the workbook
     workbook.SheetNames.forEach(sheetName => {
       const sheet = workbook.Sheets[sheetName];
       const jsonData: any[] = XLSX.utils.sheet_to_json(sheet);
@@ -20,7 +19,6 @@ export const mergeFiles = async (
       const processedData = jsonData.map((row: any) => {
         const newRow = { ...row };
         if (options.addSourceColumn) {
-          // Add source filename as a prefix to avoid collisions with existing columns
           newRow['__Source_File'] = item.name;
         }
         return newRow;
@@ -30,11 +28,8 @@ export const mergeFiles = async (
     });
   }
 
-  // Handle Duplicates if selected
   let resultData = finalData;
   if (options.removeDuplicates) {
-    // Unique check by stringifying the row object (excluding the source file column if desired, 
-    // but here we keep it simple for the user)
     const seen = new Set();
     resultData = finalData.filter(item => {
       const serial = JSON.stringify(item);
@@ -44,12 +39,54 @@ export const mergeFiles = async (
     });
   }
 
-  // Create new Workbook
   const newSheet = XLSX.utils.json_to_sheet(resultData);
   const newWorkbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(newWorkbook, newSheet, options.sheetName || "MergedData");
 
-  // Generate output
   const wbout = XLSX.write(newWorkbook, { bookType: 'xlsx', type: 'array' });
   return new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+};
+
+export const convertToCsv = async (fileItem: FileItem): Promise<Blob> => {
+  const data = await fileItem.file.arrayBuffer();
+  const workbook = XLSX.read(data);
+  const firstSheetName = workbook.SheetNames[0];
+  const worksheet = workbook.Sheets[firstSheetName];
+  const csv = XLSX.utils.sheet_to_csv(worksheet);
+  return new Blob([csv], { type: 'text/csv' });
+};
+
+export const convertCsvToExcel = async (fileItem: FileItem): Promise<Blob> => {
+  const text = await fileItem.file.text();
+  const workbook = XLSX.read(text, { type: 'string' });
+  const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  return new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+};
+
+export const convertJsonToExcel = async (fileItem: FileItem): Promise<Blob> => {
+  const text = await fileItem.file.text();
+  const json = JSON.parse(text);
+  const worksheet = XLSX.utils.json_to_sheet(Array.isArray(json) ? json : [json]);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+  const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  return new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+};
+
+export const splitExcelFile = async (fileItem: FileItem, options: SplitOptions): Promise<Blob[]> => {
+  const data = await fileItem.file.arrayBuffer();
+  const workbook = XLSX.read(data);
+  const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+  const jsonData: any[] = XLSX.utils.sheet_to_json(firstSheet);
+  
+  const blobs: Blob[] = [];
+  for (let i = 0; i < jsonData.length; i += options.rowsPerFile) {
+    const chunk = jsonData.slice(i, i + options.rowsPerFile);
+    const newSheet = XLSX.utils.json_to_sheet(chunk);
+    const newWorkbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(newWorkbook, newSheet, "Split_Data");
+    const wbout = XLSX.write(newWorkbook, { bookType: 'xlsx', type: 'array' });
+    blobs.push(new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+  }
+  return blobs;
 };

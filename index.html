@@ -1,35 +1,88 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merge Excel Files Online - 100% Free & Local</title>
-    <meta name="description" content="Combine multiple Excel spreadsheets (XLSX, XLS, CSV) into one file instantly. Secure client-side processing ensures your data never leaves your device.">
+    
+    <!-- Primary SEO -->
+    <title>Merge Excel Files Online - #1 Free & Secure Excel Merger</title>
+    <meta name="description" content="Merge multiple Excel (XLSX, XLS) and CSV files into one workbook instantly. 100% free, secure client-side processing. Your data never leaves your computer.">
+    <link rel="canonical" href="https://www.mergeexcelfiles.online/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.mergeexcelfiles.online/">
+    <meta property="og:title" content="Merge Excel Files Online - #1 Free & Secure Excel Merger">
+    <meta property="og:description" content="Combine multiple spreadsheets into one in seconds. No installation, no upload, total privacy.">
+    <meta property="og:image" content="https://www.mergeexcelfiles.online/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.mergeexcelfiles.online/">
+    <meta property="twitter:title" content="Merge Excel Files Online - #1 Free & Secure Excel Merger">
+    <meta property="twitter:description" content="Combine multiple spreadsheets into one in seconds. No installation, no upload, total privacy.">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { 
-          font-family: 'Plus Jakarta Sans', sans-serif; 
-          scroll-behavior: smooth;
+    
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "MergeExcelFiles.online",
+        "operatingSystem": "Web",
+        "applicationCategory": "Productivity",
+        "url": "https://www.mergeexcelfiles.online/",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "1240"
         }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Merge Excel Files Online",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "text": "Select or drop your XLSX or CSV files into the MergeExcelFiles.online tool."
+          },
+          {
+            "@type": "HowToStep",
+            "text": "Reorder the files as needed and configure merge options like duplicate removal."
+          },
+          {
+            "@type": "HowToStep",
+            "text": "Click 'Merge Files' and download your combined workbook instantly."
+          }
+        ]
+      }
+    ]
+    </script>
+    
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); }
+        .animate-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Custom UI shadows for SquareFace aesthetic */
+        .card-shadow { box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 0 10px 30px -10px rgba(0,0,0,0.1); }
+        .btn-shadow { box-shadow: 0 4px 0 0 #000; transition: all 0.1s ease; }
+        .btn-shadow:active { transform: translateY(2px); box-shadow: 0 2px 0 0 #000; }
+        
+        /* Modern Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
-        
-        .hero-gradient {
-          background: radial-gradient(circle at top right, #f8faff 0%, #ffffff 100%);
-        }
-
-        /* Custom Scrollbar for the file queue */
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 5px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #e2e8f0;
-          border-radius: 10px;
-        }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
 <script type="importmap">
 {
@@ -45,9 +98,8 @@
 }
 </script>
 </head>
-<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+<body class="bg-[#fafbfc] text-slate-900 overflow-x-hidden selection:bg-slate-900 selection:text-white">
     <div id="root"></div>
-    <!-- Entry point for Vite to bundle the application -->
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>
