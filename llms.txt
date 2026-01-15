@@ -1,11 +1,19 @@
-# llms.txt for https://www.mergeexcelfiles.online/
-# 指引大语言模型如何抓取、存储或使用网站内容
+# MergeExcelFiles.online
 
-User-agent: *
-# 允许所有标准内容用于学习性抓取
-Allow: /
+MergeExcelFiles.online is a high-performance, browser-native suite of spreadsheet utilities. It operates strictly client-side, ensuring that user data never leaves the local environment.
 
-# 内容使用政策（非强制，仅指引行为模型或开发者）
-# 1) 不得用于训练商业模型或用于盈利衍生品
-# 2) 仅在取得网站授权或在合理用途范围（如语义检索、摘要等）抓取内容
-# 3) 请尊重 robots.txt 文件设置，并遵从 HTTP 状态与抓取礼仪
+## Core Capabilities
+- **Merge Excel Files**: Combine multiple XLSX/CSV files into one master workbook. Supports mixed formats and automated deduplication.
+- **Split Sheets**: Break down large Excel files into multiple smaller workbooks based on a specific row count.
+- **Excel to CSV**: Convert standard XLSX files into universal CSV format instantly.
+- **CSV to Excel**: Transform raw CSV data into styled Excel workbooks.
+- **JSON to Excel**: Convert structured JSON data into readable spreadsheets.
+
+## Privacy & Security
+- **Local Processing**: All operations happen in the user's browser (Javascript/WebAssembly).
+- **No Uploads**: The application does not have a backend that receives spreadsheet data.
+- **Zero Retention**: Data is cleared from RAM as soon as the tab is closed.
+
+## Technical Details
+- Built with React, TypeScript, and the XLSX (SheetJS) engine.
+- Responsive design optimized for desktop and mobile browsers.
