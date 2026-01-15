@@ -5,7 +5,7 @@ Disallow: /_next/
 Disallow: /private/
 
 # Sitemaps
-Sitemap: https://www.mergeexcelfiles.online/sitemap.xml
+Sitemap: https://www.mergeexcelfiles.online/sitemap.txt
 
 # Crawl-delay for non-major bots
 User-agent: B_bot
