@@ -570,6 +570,7 @@ const App: React.FC = () => {
             Whether you need to merge multiple xlsx files online or split sheets by rows, our browser-based excel processor delivers results without installation. 
             Try our secure csv to excel converter and multi-sheet joiner for professional data management now. We are the top-rated merge utility for data analysts worldwide seeking a private way to combine workbooks.
           </div>
+          <div  className="max-w-4xl mx-auto text-slate-500 text-xs md:text-sm font-medium leading-relaxed opacity-60"><a href="https://lewisstructuregenerator.org/">Lewis Structure Generator</a><a href=""></a><a href="https://spanishwordunscrambler.com/">spanish word unscrambler</a></div>
         </div>
       </footer>
     </div>
