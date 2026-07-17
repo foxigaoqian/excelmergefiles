@@ -34,7 +34,6 @@ async function readWorkbook(file: File): Promise<XLSX.WorkBook> {
     type: 'array',
     cellDates: true,
     cellStyles: true,
-    cellFormula: true,
   });
 }
 
@@ -87,7 +86,7 @@ export const mergeFiles = async (
       });
 
       for (const row of rows) {
-        const outputRow = { ...row };
+        const outputRow: Record<string, unknown> = { ...row };
         if (options.addSourceColumn) {
           outputRow.__Source_File = item.name;
           outputRow.__Source_Sheet = sourceSheetName;
