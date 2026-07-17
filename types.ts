@@ -1,5 +1,12 @@
+export type ToolType =
+  | 'merge'
+  | 'merge-csv'
+  | 'excel-to-csv'
+  | 'csv-to-excel'
+  | 'json-to-excel'
+  | 'splitter';
 
-export type ToolType = 'merge' | 'excel-to-csv' | 'csv-to-excel' | 'json-to-excel' | 'splitter';
+export type MergeMode = 'append-rows' | 'keep-sheets';
 
 export interface FileItem {
   id: string;
@@ -10,6 +17,7 @@ export interface FileItem {
 }
 
 export interface MergeOptions {
+  mode: MergeMode;
   sheetName: string;
   removeDuplicates: boolean;
   addSourceColumn: boolean;
