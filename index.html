@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Merge Excel Files Online – Append Rows or Keep Sheets</title>
-  <meta name="description" content="Merge Excel files in your browser. Append tabular rows into one worksheet or keep source worksheets in one workbook. No file-content upload to an application server.">
+  <title>Merge Excel Files Online – Combine XLSX, XLS & CSV</title>
+  <meta name="description" content="Merge Excel files online in your browser. Append rows into one worksheet or keep source sheets in one workbook. Includes examples, limits, and troubleshooting.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
   <link rel="canonical" href="https://www.mergeexcelfiles.online/">
   <link rel="icon" href="/mergeexcelfiles.png" type="image/png">
@@ -12,7 +12,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.mergeexcelfiles.online/">
   <meta property="og:title" content="Merge Excel Files Online">
-  <meta property="og:description" content="Append spreadsheet rows or keep source worksheets in one workbook. Files are processed locally in your browser.">
+  <meta property="og:description" content="Combine multiple XLSX, XLS, or CSV files by appending rows or keeping source worksheets separate.">
   <meta property="og:image" content="https://www.mergeexcelfiles.online/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,15 +20,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Merge Excel Files Online","url":"https://www.mergeexcelfiles.online/","description":"Browser-based spreadsheet tool for appending tabular rows or keeping source worksheets in one workbook.","applicationCategory":"BusinessApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript and a modern browser","isAccessibleForFree":true,"featureList":["Append spreadsheet rows","Keep source worksheets","Remove identical rows","Add source file and sheet columns"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I merge Excel files with different columns?","acceptedAnswer":{"@type":"Answer","text":"Yes. Append Rows creates separate output columns for different header names. Standardize headers first for the cleanest result."}},{"@type":"Question","name":"Does the tool preserve formulas and formatting?","acceptedAnswer":{"@type":"Answer","text":"Append Rows focuses on readable table data. Keep Sheets may retain some worksheet features, but formulas, charts, macros, styling, and external links must be verified."}},{"@type":"Question","name":"Are spreadsheet files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"Spreadsheet contents are read and processed in the current browser tab and are not sent to an application processing server."}},{"@type":"Question","name":"How many Excel files can I merge?","acceptedAnswer":{"@type":"Answer","text":"There is no fixed application count, but browser memory, device capacity, and workbook complexity create practical limits."}}]}</script>
   <style>body{font-family:'Plus Jakarta Sans',sans-serif}</style>
 </head>
 <body class="bg-white text-slate-900">
   <div id="root" data-tool="merge" data-merge-mode="append-rows">
-    <main style="max-width:900px;margin:80px auto;padding:24px">
+    <main style="max-width:920px;margin:64px auto;padding:24px;line-height:1.75">
       <h1>Merge Excel Files Online</h1>
-      <p>Append table rows from multiple XLSX, XLS, or CSV files, or keep source worksheets inside one output workbook. Processing runs in your browser.</p>
-      <h2>Choose the correct merge mode</h2>
-      <p><strong>Append Rows</strong> converts worksheets into table records. <strong>Keep Sheets</strong> copies worksheets into one workbook where supported. Always verify the output because macros, charts, external connections, and advanced formatting may not be preserved.</p>
+      <p>Combine multiple XLSX, XLS, or CSV files without sending spreadsheet contents to an application processing server. Choose Append Rows to combine similar tables into one worksheet, or Keep Sheets to place source worksheets in one output workbook.</p>
+      <h2>How to merge Excel files</h2>
+      <ol><li>Select two or more supported files.</li><li>Choose Append Rows or Keep Sheets.</li><li>Arrange files in the required processing order.</li><li>Configure source columns and identical-row removal.</li><li>Merge, download, and verify the output in Excel.</li></ol>
+      <h2>Append Rows or Keep Sheets?</h2>
+      <p><strong>Append Rows</strong> works best when files use similar headers and should become one table. <strong>Keep Sheets</strong> is better when each workbook or worksheet should remain separate.</p>
+      <h2>Common use cases</h2>
+      <p>Typical uses include monthly sales reports, expense exports, inventory lists, survey responses, CRM exports, and recurring CSV downloads.</p>
+      <h2>Example</h2>
+      <p>If January.xlsx and February.xlsx both contain Date, Order ID, and Revenue columns, Append Rows creates one worksheet containing both months. Keep Sheets creates separate January and February tabs.</p>
+      <h2>What may not be preserved</h2>
+      <p>Charts, macros, external connections, advanced styling, workbook settings, and unsupported formulas may change or be removed. Keep the original files and verify the result before important use.</p>
+      <h2>Troubleshooting</h2>
+      <h3>Columns do not line up</h3><p>Make header names consistent before merging. Different names are treated as separate output columns.</p>
+      <h3>Dates look different</h3><p>Excel serial dates, text dates, and regional formats may be interpreted differently. Review all date columns after download.</p>
+      <h3>The browser becomes slow</h3><p>Large workbooks consume browser memory. Process fewer or smaller files at a time.</p>
+      <h2>Frequently asked questions</h2>
+      <h3>Can I combine XLS and XLSX files?</h3><p>Yes, within the features supported by the browser spreadsheet library.</p>
+      <h3>Can duplicate rows be removed?</h3><p>The tool can remove rows that are completely identical across all output columns. It does not deduplicate by one selected key.</p>
+      <h3>Are files uploaded?</h3><p>Spreadsheet contents are processed in the browser tab. Hosting and static asset providers may receive ordinary web request data, but the selected file contents are not sent to an application processing server.</p>
     </main>
   </div>
   <script type="module" src="/index.tsx"></script>
