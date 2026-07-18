@@ -1,20 +1,19 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Merge Excel Files
 
-# Run and deploy your AI Studio app
+Browser-based spreadsheet utilities for merging, splitting, and converting Excel, CSV, and JSON files.
 
-This contains everything you need to run your app locally.
+The production build creates independent indexable tool pages and processes uploaded files locally in the browser.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1VB9rbU56W4LV55assgc8umYTAyNm11dh
+## Development
 
-## Run Locally
+```bash
+npm install
+npm run dev
+```
 
-**Prerequisites:**  Node.js
+## Quality checks
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+```bash
+npm run typecheck
+npm run build
+```
