@@ -26,6 +26,9 @@ for(const file of trustPages){
  if((html.match(/<h2/g)||[]).length<3) throw new Error(`${file}: trust content is too thin`);
  for(const href of ['/privacy-policy/','/terms/','/contact/']) if(!html.includes(href)) throw new Error(`${file}: missing trust navigation ${href}`);
 }
+const contact=fs.readFileSync('contact/index.html','utf8');
+for(const token of ['mailto:foxigaoqian@gmail.com','Email Support','Do not send private workbooks']) if(!contact.includes(token)) throw new Error(`Contact page missing: ${token}`);
+if(/Open GitHub Issues/i.test(contact)) throw new Error('Contact page still uses the old issue button.');
 const source=['index.html','ToolApp.tsx','SeoContent.tsx','utils/excelProcessor.ts','types.ts'].map(file=>fs.readFileSync(file,'utf8')).join('\n');
 for(const pattern of [/aggregateRating/i,/reviewCount/i,/Data Accuracy Guaranteed/i,/HIPAA/i,/GDPR compliance/i,/Top-rated/i,/NONE Limit/i,/setTimeout\([^)]*800/i,/alert\(/]) if(pattern.test(source)) throw new Error(`Unverifiable claim or poor UX pattern found: ${pattern}`);
 const seo=fs.readFileSync('SeoContent.tsx','utf8');
