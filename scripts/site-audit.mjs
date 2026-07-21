@@ -18,8 +18,22 @@ for(const file of allPages){
 }
 for(const file of toolPages){
  const html=fs.readFileSync(file,'utf8');
- for(const token of ['Frequently asked questions','id="root"','data-tool=','type="module" src="/index.tsx"','class="app-boot"','class="seo-fallback"',"document.documentElement.classList.add('js')",'.js .seo-fallback{display:none}']) if(!html.includes(token)) throw new Error(`${file}: missing ${token}`);
- if((html.match(/<h2>/g)||[]).length<3) throw new Error(`${file}: thin static content`);
+ for(const token of ['Frequently asked questions','Before and after example','Troubleshooting','Related spreadsheet tools','HowTo','FAQPage','id="root"','data-tool=','type="module" src="/index.tsx"','class="app-boot"','class="seo-fallback"',"document.documentElement.classList.add('js')",'.js .seo-fallback{display:none}']) if(!html.includes(token)) throw new Error(`${file}: missing ${token}`);
+ if((html.match(/<h2>/g)||[]).length<6) throw new Error(`${file}: high-competition static content is too thin`);
+ if((html.match(/<h3>/g)||[]).length<7) throw new Error(`${file}: lacks topic-specific subtopics`);
+ if((html.match(/<a href=/g)||[]).length<3) throw new Error(`${file}: insufficient contextual internal links`);
+}
+const pageSpecific={
+ 'merge-excel-files-keep-sheets/index.html':['Duplicate sheet names','Different layouts','macros'],
+ 'merge-csv-files/index.html':['UTF-8','delimiter','leading zeros'],
+ 'split-excel-by-rows/index.html':['10,000','header','column value'],
+ 'excel-to-csv/index.html':['first worksheet','leading zeros','recalculate'],
+ 'csv-to-excel/index.html':['scientific notation','delimiter','ZIP'],
+ 'json-to-excel/index.html':['flat array','nested','null values'],
+};
+for(const [file,tokens] of Object.entries(pageSpecific)){
+ const html=fs.readFileSync(file,'utf8');
+ for(const token of tokens) if(!html.toLowerCase().includes(token.toLowerCase())) throw new Error(`${file}: missing specialist topic ${token}`);
 }
 for(const file of trustPages){
  const html=fs.readFileSync(file,'utf8');
@@ -32,7 +46,7 @@ if(/Open GitHub Issues/i.test(contact)) throw new Error('Contact page still uses
 const source=['index.html','ToolApp.tsx','SeoContent.tsx','utils/excelProcessor.ts','types.ts'].map(file=>fs.readFileSync(file,'utf8')).join('\n');
 for(const pattern of [/aggregateRating/i,/reviewCount/i,/Data Accuracy Guaranteed/i,/HIPAA/i,/GDPR compliance/i,/Top-rated/i,/NONE Limit/i,/setTimeout\([^)]*800/i,/alert\(/]) if(pattern.test(source)) throw new Error(`Unverifiable claim or poor UX pattern found: ${pattern}`);
 const seo=fs.readFileSync('SeoContent.tsx','utf8');
-for(const token of ['Append Rows vs Keep Sheets','Common use cases','Troubleshooting','Frequently asked questions']) if(!seo.includes(token)) throw new Error(`SEO content missing: ${token}`);
+for(const token of ['Append Rows vs Keep Sheets','Before and after example','Data and output behavior','Common use cases','Troubleshooting','Frequently asked questions','Related spreadsheet tools','DataTable']) if(!seo.includes(token)) throw new Error(`SEO content missing: ${token}`);
 const app=fs.readFileSync('ToolApp.tsx','utf8');
 for(const token of ["'keep-sheets'","'append-rows'",'role="alert"','File contents stay in this browser tab']) if(!app.includes(token)) throw new Error(`Tool interface missing: ${token}`);
 const processor=fs.readFileSync('utils/excelProcessor.ts','utf8');
@@ -41,4 +55,4 @@ const sitemap=fs.readFileSync('public/sitemap.xml','utf8');
 for(const file of allPages){const route=file==='index.html'?'/':`/${path.dirname(file)}/`;if(!sitemap.includes(`https://www.mergeexcelfiles.online${route}`)) throw new Error(`Sitemap missing ${route}`);}
 const entry=fs.readFileSync('index.tsx','utf8');
 for(const href of ['/privacy-policy/','/terms/','/contact/']) if(!entry.includes(href)) throw new Error(`Footer missing ${href}`);
-console.log(`Spreadsheet site audit passed for ${toolPages.length} tools, branded loading shells, and ${trustPages.length} trust pages.`);
+console.log(`High-competition spreadsheet SEO audit passed for ${toolPages.length} tools and ${trustPages.length} trust pages.`);
