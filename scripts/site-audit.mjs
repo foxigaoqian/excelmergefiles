@@ -18,7 +18,7 @@ for(const file of allPages){
 }
 for(const file of toolPages){
  const html=fs.readFileSync(file,'utf8');
- for(const token of ['Frequently asked questions','id="root"','data-tool=','type="module" src="/index.tsx"']) if(!html.includes(token)) throw new Error(`${file}: missing ${token}`);
+ for(const token of ['Frequently asked questions','id="root"','data-tool=','type="module" src="/index.tsx"','class="app-boot"','class="seo-fallback"',"document.documentElement.classList.add('js')",'.js .seo-fallback{display:none}']) if(!html.includes(token)) throw new Error(`${file}: missing ${token}`);
  if((html.match(/<h2>/g)||[]).length<3) throw new Error(`${file}: thin static content`);
 }
 for(const file of trustPages){
@@ -41,4 +41,4 @@ const sitemap=fs.readFileSync('public/sitemap.xml','utf8');
 for(const file of allPages){const route=file==='index.html'?'/':`/${path.dirname(file)}/`;if(!sitemap.includes(`https://www.mergeexcelfiles.online${route}`)) throw new Error(`Sitemap missing ${route}`);}
 const entry=fs.readFileSync('index.tsx','utf8');
 for(const href of ['/privacy-policy/','/terms/','/contact/']) if(!entry.includes(href)) throw new Error(`Footer missing ${href}`);
-console.log(`Spreadsheet site audit passed for ${toolPages.length} tools and ${trustPages.length} trust pages.`);
+console.log(`Spreadsheet site audit passed for ${toolPages.length} tools, branded loading shells, and ${trustPages.length} trust pages.`);
