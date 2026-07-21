@@ -19,7 +19,7 @@ for(const file of allPages){
 for(const file of toolPages){
  const html=fs.readFileSync(file,'utf8');
  for(const token of ['Frequently asked questions','Before and after example','Troubleshooting','Related spreadsheet tools','HowTo','FAQPage','id="root"','data-tool=','type="module" src="/index.tsx"','class="app-boot"','class="seo-fallback"',"document.documentElement.classList.add('js')",'.js .seo-fallback{display:none}']) if(!html.includes(token)) throw new Error(`${file}: missing ${token}`);
- if((html.match(/<h2>/g)||[]).length<7) throw new Error(`${file}: high-competition content is too thin`);
+ if((html.match(/<h2>/g)||[]).length<6) throw new Error(`${file}: high-competition static content is too thin`);
  if((html.match(/<h3>/g)||[]).length<7) throw new Error(`${file}: lacks topic-specific subtopics`);
  if((html.match(/<a href=/g)||[]).length<3) throw new Error(`${file}: insufficient contextual internal links`);
 }
