@@ -20,7 +20,7 @@ import {
 } from './utils/excelProcessor';
 
 const ROUTES = [
-  ['/', 'Merge Excel'],
+  ['/', 'Merge XLSX'],
   ['/merge-excel-files-keep-sheets/', 'Keep Sheets'],
   ['/merge-csv-files/', 'Merge CSV'],
   ['/split-excel-by-rows/', 'Split Excel'],
@@ -41,15 +41,15 @@ type ToolConfig = {
 
 const CONFIG: Record<ToolType, ToolConfig> = {
   merge: {
-    title: 'Merge Excel Files',
-    subtitle: 'Append table rows or keep source worksheets',
-    description: 'Combine XLSX, XLS, or CSV files locally in your browser. Choose the merge mode that matches the structure you need.',
+    title: 'Merge XLSX Files Online',
+    subtitle: 'Combine Excel files into one sheet or one workbook',
+    description: 'Merge multiple XLSX, XLS, or CSV files for free. No signup and no file upload — spreadsheet contents are processed locally in your browser.',
     accept: '.xlsx,.xls,.csv',
     multiple: true,
-    button: 'Merge Selected Files',
+    button: 'Merge Excel Files',
     limits: [
-      'Append Rows converts every worksheet into table rows and expects headers in the first row.',
-      'Keep Sheets copies source worksheets into one workbook where supported by the spreadsheet library.',
+      'Merge into One Sheet converts worksheet tables into rows and expects headers in the first row.',
+      'Keep Separate Sheets copies supported source worksheets into one workbook and keeps them as separate tabs.',
       'Charts, macros, external connections, advanced styling, and unsupported Excel features may change or be removed.',
     ],
   },
@@ -139,6 +139,7 @@ export default function ToolApp({ initialTool = 'merge', initialMergeMode = 'app
   const config = CONFIG[initialTool];
   const [files, setFiles] = useState<FileItem[]>([]);
   const [processing, setProcessing] = useState(false);
+  const [dragActive, setDragActive] = useState(false);
   const [error, setError] = useState('');
   const [results, setResults] = useState<Array<{ blob: Blob; name: string }>>([]);
   const [mergeOptions, setMergeOptions] = useState<MergeOptions>({
@@ -149,16 +150,27 @@ export default function ToolApp({ initialTool = 'merge', initialMergeMode = 'app
   });
   const [splitOptions, setSplitOptions] = useState<SplitOptions>({ rowsPerFile: 1000 });
   const allowed = useMemo(() => new Set(config.accept.split(',').map((item) => item.trim())), [config.accept]);
+  const selectedBytes = useMemo(() => files.reduce((sum, item) => sum + item.size, 0), [files]);
+  const outputBytes = useMemo(() => results.reduce((sum, result) => sum + result.blob.size, 0), [results]);
 
-  function selectFiles(event: React.ChangeEvent<HTMLInputElement>) {
-    const selected = Array.from(event.target.files || []);
+  function addFiles(selected: File[]) {
     const rejected = selected.filter((file) => !allowed.has(extension(file.name)));
     const accepted = selected.filter((file) => allowed.has(extension(file.name)));
     setError(rejected.length ? `Unsupported file type: ${rejected.map((file) => file.name).join(', ')}` : '');
     const items = accepted.map((file) => ({ id: crypto.randomUUID(), file, name: file.name, size: file.size, status: 'pending' as const }));
     setFiles((current) => (config.multiple ? [...current, ...items] : items.slice(0, 1)));
     setResults([]);
+  }
+
+  function selectFiles(event: React.ChangeEvent<HTMLInputElement>) {
+    addFiles(Array.from(event.target.files || []));
     event.target.value = '';
+  }
+
+  function dropFiles(event: React.DragEvent<HTMLLabelElement>) {
+    event.preventDefault();
+    setDragActive(false);
+    addFiles(Array.from(event.dataTransfer.files || []));
   }
 
   function move(index: number, offset: -1 | 1) {
@@ -225,23 +237,35 @@ export default function ToolApp({ initialTool = 'merge', initialMergeMode = 'app
       </header>
 
       <main>
-        <section className="border-b border-slate-100 px-5 py-16 md:py-24">
+        <section className="border-b border-slate-100 px-5 py-14 md:py-20">
           <div className="mx-auto max-w-6xl">
-            <div className="mx-auto mb-12 max-w-3xl text-center">
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-700"><CheckCircle className="h-4 w-4" />File contents stay in this browser tab</div>
+            <div className="mx-auto mb-10 max-w-4xl text-center">
+              {initialTool === 'merge' ? (
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-700"><CheckCircle className="h-4 w-4" />100% Free · No Signup · No File Upload</div>
+              ) : (
+                <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-bold text-emerald-700"><CheckCircle className="h-4 w-4" />File contents stay in this browser tab</div>
+              )}
               <h1 className="text-4xl font-black tracking-tight md:text-6xl">{config.title}</h1>
-              <p className="mt-3 text-xl font-bold text-slate-300">{config.subtitle}</p>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-500 md:text-lg">{config.description}</p>
+              <p className="mt-4 text-xl font-bold text-slate-700 md:text-2xl">{config.subtitle}</p>
+              <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-slate-500 md:text-lg">{config.description}</p>
+              {initialTool === 'merge' && <div className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-600"><span>✓ XLSX, XLS & CSV</span><span>✓ Merge multiple files</span><span>✓ Private browser processing</span><span>✓ Download one workbook</span></div>}
             </div>
 
             <div className="grid gap-8 rounded-[32px] border border-slate-200 bg-white p-6 shadow-xl md:p-10 lg:grid-cols-5">
               <div className="space-y-5 lg:col-span-3">
-                <label className="relative flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center hover:border-slate-900 hover:bg-white">
+                <label
+                  onDragOver={(event) => { event.preventDefault(); setDragActive(true); }}
+                  onDragLeave={() => setDragActive(false)}
+                  onDrop={dropFiles}
+                  className={`relative flex min-h-64 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed p-8 text-center transition ${dragActive ? 'border-emerald-500 bg-emerald-50' : 'border-slate-300 bg-slate-50 hover:border-slate-900 hover:bg-white'}`}
+                >
                   <span className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-white"><Upload /></span>
-                  <strong className="text-xl">Select {config.multiple ? 'two or more files' : 'one file'}</strong>
+                  <strong className="text-xl">{dragActive ? 'Drop files here' : `Drag & drop or select ${config.multiple ? 'files' : 'a file'}`}</strong>
                   <span className="mt-2 text-sm text-slate-500">Accepted: {config.accept.replaceAll(',', ', ')}</span>
+                  {initialTool === 'merge' && <span className="mt-2 text-xs font-semibold text-emerald-700">Your spreadsheet contents never leave this browser tab</span>}
                   <input type="file" className="absolute inset-0 cursor-pointer opacity-0" accept={config.accept} multiple={config.multiple} onChange={selectFiles} />
                 </label>
+                {!!files.length && <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm text-white"><strong>{files.length} {files.length === 1 ? 'file' : 'files'} selected</strong><span className="text-slate-300">{sizeLabel(selectedBytes)} total · processed locally</span></div>}
                 {files.map((file, index) => (
                   <div key={file.id} className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 p-3">
                     <div className="min-w-0 flex-1"><p className="truncate text-sm font-bold">{file.name}</p><p className="text-xs text-slate-400">{sizeLabel(file.size)}</p></div>
@@ -255,14 +279,14 @@ export default function ToolApp({ initialTool = 'merge', initialMergeMode = 'app
               <aside className="rounded-3xl border border-slate-200 bg-slate-50 p-6 lg:col-span-2">
                 <h2 className="text-sm font-black uppercase tracking-wider text-slate-500">Options</h2>
                 {(initialTool === 'merge' || initialTool === 'merge-csv') && <div className="mt-5 space-y-4">
-                  {initialTool === 'merge' && <div><label className="mb-2 block text-sm font-bold">Merge mode</label><div className="grid grid-cols-2 gap-2"><button type="button" onClick={() => setMergeOptions((value) => ({ ...value, mode: 'append-rows' }))} className={`rounded-xl border p-3 text-sm font-bold ${mergeOptions.mode === 'append-rows' ? 'bg-slate-900 text-white' : 'bg-white'}`}>Append Rows</button><button type="button" onClick={() => setMergeOptions((value) => ({ ...value, mode: 'keep-sheets' }))} className={`rounded-xl border p-3 text-sm font-bold ${mergeOptions.mode === 'keep-sheets' ? 'bg-slate-900 text-white' : 'bg-white'}`}>Keep Sheets</button></div></div>}
+                  {initialTool === 'merge' && <div><label className="mb-2 block text-sm font-bold">How do you want to combine the files?</label><div className="grid gap-2"><button type="button" onClick={() => setMergeOptions((value) => ({ ...value, mode: 'append-rows' }))} className={`rounded-xl border p-4 text-left ${mergeOptions.mode === 'append-rows' ? 'border-slate-900 bg-slate-900 text-white' : 'bg-white'}`}><strong className="block text-sm">Merge into One Sheet</strong><span className={`mt-1 block text-xs ${mergeOptions.mode === 'append-rows' ? 'text-slate-300' : 'text-slate-500'}`}>Append rows and align matching column headers</span></button><button type="button" onClick={() => setMergeOptions((value) => ({ ...value, mode: 'keep-sheets' }))} className={`rounded-xl border p-4 text-left ${mergeOptions.mode === 'keep-sheets' ? 'border-slate-900 bg-slate-900 text-white' : 'bg-white'}`}><strong className="block text-sm">Keep Separate Sheets</strong><span className={`mt-1 block text-xs ${mergeOptions.mode === 'keep-sheets' ? 'text-slate-300' : 'text-slate-500'}`}>Combine files into one workbook with separate tabs</span></button></div></div>}
                   {(initialTool === 'merge-csv' || mergeOptions.mode === 'append-rows') && <><label className="block text-sm font-bold">Output sheet name<input value={mergeOptions.sheetName} maxLength={31} onChange={(event) => setMergeOptions((value) => ({ ...value, sheetName: event.target.value }))} className="mt-2 w-full rounded-xl border border-slate-200 bg-white p-3 font-normal" /></label><label className="flex gap-3 rounded-xl border bg-white p-3 text-sm"><input type="checkbox" checked={mergeOptions.addSourceColumn} onChange={(event) => setMergeOptions((value) => ({ ...value, addSourceColumn: event.target.checked }))} /><span>Add source file and sheet columns</span></label><label className="flex gap-3 rounded-xl border bg-white p-3 text-sm"><input type="checkbox" checked={mergeOptions.removeDuplicates} onChange={(event) => setMergeOptions((value) => ({ ...value, removeDuplicates: event.target.checked }))} /><span>Remove completely identical rows</span></label></>}
                   {initialTool === 'merge' && mergeOptions.mode === 'keep-sheets' && <p className="rounded-xl bg-amber-50 p-3 text-sm text-amber-800">Verify formulas, styles, charts, macros, and external links after download.</p>}
                 </div>}
                 {initialTool === 'splitter' && <label className="mt-5 block text-sm font-bold">Rows per output file<input type="number" min="1" max="1000000" value={splitOptions.rowsPerFile} onChange={(event) => setSplitOptions({ rowsPerFile: Math.max(1, Number(event.target.value) || 1) })} className="mt-2 w-full rounded-xl border border-slate-200 bg-white p-3 font-normal" /></label>}
                 {!['merge', 'merge-csv', 'splitter'].includes(initialTool) && <p className="mt-5 rounded-xl border bg-white p-4 text-sm leading-relaxed text-slate-600">Review the output carefully. Conversion focuses on table data, not complete workbook feature preservation.</p>}
                 {error && <div role="alert" className="mt-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"><AlertTriangle className="mr-2 inline h-4 w-4" />{error}</div>}
-                <div className="mt-6">{results.length ? <div className="space-y-3">{results.map((result) => <button key={result.name} type="button" onClick={() => download(result)} className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-4 font-bold text-white"><Download className="h-5 w-5" />Download {result.name}</button>)}<button type="button" onClick={() => { setFiles([]); setResults([]); }} className="w-full rounded-xl border bg-white p-3 text-sm font-bold">Start again</button></div> : <button type="button" onClick={run} disabled={processing} className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-4 font-bold text-white disabled:opacity-50">{processing ? 'Processing locally...' : config.button}<ArrowRight className="h-5 w-5" /></button>}</div>
+                <div className="mt-6">{results.length ? <div className="space-y-3"><div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4"><div className="flex items-center gap-2 font-bold text-emerald-800"><CheckCircle className="h-5 w-5" />Processing complete</div><p className="mt-2 text-sm leading-relaxed text-emerald-700">{initialTool === 'merge' || initialTool === 'merge-csv' ? `${files.length} files combined into ${results.length} downloadable workbook.` : `${results.length} output ${results.length === 1 ? 'file is' : 'files are'} ready.`} Output size: {sizeLabel(outputBytes)}.</p></div>{results.map((result) => <button key={result.name} type="button" onClick={() => download(result)} className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-4 font-bold text-white"><Download className="h-5 w-5" />Download {result.name}</button>)}<button type="button" onClick={() => { setFiles([]); setResults([]); }} className="w-full rounded-xl border bg-white p-3 text-sm font-bold">Start again</button></div> : <button type="button" onClick={run} disabled={processing} className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-4 font-bold text-white disabled:opacity-50">{processing ? 'Processing locally...' : config.button}<ArrowRight className="h-5 w-5" /></button>}</div>
               </aside>
             </div>
           </div>
