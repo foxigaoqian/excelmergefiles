@@ -4,6 +4,28 @@ import ToolApp from './ToolApp';
 import SeoContent from './SeoContent';
 import { MergeMode, ToolType } from './types';
 
+const GA_MEASUREMENT_ID = 'G-6B82XZX2D4';
+const gaScriptSrc = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+
+if (!document.querySelector(`script[src="${gaScriptSrc}"]`)) {
+  const gaScript = document.createElement('script');
+  gaScript.async = true;
+  gaScript.src = gaScriptSrc;
+  document.head.appendChild(gaScript);
+
+  const gaWindow = window as typeof window & {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+  };
+
+  gaWindow.dataLayer = gaWindow.dataLayer || [];
+  gaWindow.gtag = function gtag(..._args: unknown[]) {
+    gaWindow.dataLayer!.push(arguments);
+  };
+  gaWindow.gtag('js', new Date());
+  gaWindow.gtag('config', GA_MEASUREMENT_ID);
+}
+
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Could not find root element to mount to');
 
