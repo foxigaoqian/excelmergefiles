@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './styles.css';
 import ToolApp from './ToolApp';
 import SeoContent from './SeoContent';
 import { MergeMode, ToolType } from './types';
