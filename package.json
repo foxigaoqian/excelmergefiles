@@ -19,9 +19,9 @@
     "vite": "^6.0.0"
   },
   "scripts": {
-    "generate:pages": "node scripts/generate-tool-pages.mjs",
-    "dev": "node scripts/generate-tool-pages.mjs && vite",
-    "build": "node scripts/generate-tool-pages.mjs && vite build",
+    "generate:pages": "node scripts/generate-tool-pages.mjs && node scripts/strip-tailwind-cdn.mjs",
+    "dev": "npm run generate:pages && vite",
+    "build": "npm run generate:pages && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   }
