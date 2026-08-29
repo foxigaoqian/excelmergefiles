@@ -15,6 +15,7 @@ export default defineConfig({
         excelToCsv: resolve(__dirname, 'excel-to-csv/index.html'),
         csvToExcel: resolve(__dirname, 'csv-to-excel/index.html'),
         jsonToExcel: resolve(__dirname, 'json-to-excel/index.html'),
+        mergeGuide: resolve(__dirname, 'how-to-merge-multiple-excel-files/index.html'),
         privacy: resolve(__dirname, 'privacy-policy/index.html'),
         terms: resolve(__dirname, 'terms/index.html'),
         contact: resolve(__dirname, 'contact/index.html'),
