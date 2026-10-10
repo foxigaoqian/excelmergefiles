@@ -126,7 +126,7 @@ export const convertToCsv = async (fileItem: FileItem): Promise<Blob> => {
   const firstSheetName = workbook.SheetNames[0];
   if (!firstSheetName) throw new Error('The workbook does not contain a worksheet.');
   const csv = XLSX.utils.sheet_to_csv(workbook.Sheets[firstSheetName]);
-  return new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  return new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
 };
 
 export const convertCsvToExcel = async (fileItem: FileItem): Promise<Blob> => {
