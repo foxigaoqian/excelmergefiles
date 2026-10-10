@@ -135,6 +135,10 @@ function sizeLabel(bytes: number) {
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
+// Total size cap for selected files. Parsing is fully in-memory, so very
+// large inputs can freeze the tab; reject them early with a clear message.
+const MAX_TOTAL_BYTES = 200 * 1024 * 1024;
+
 export default function ToolApp({ initialTool = 'merge', initialMergeMode = 'append-rows' }: ToolAppProps) {
   const config = CONFIG[initialTool];
   const [files, setFiles] = useState<FileItem[]>([]);
@@ -156,6 +160,13 @@ export default function ToolApp({ initialTool = 'merge', initialMergeMode = 'app
   function addFiles(selected: File[]) {
     const rejected = selected.filter((file) => !allowed.has(extension(file.name)));
     const accepted = selected.filter((file) => allowed.has(extension(file.name)));
+    const existingBytes = config.multiple ? files.reduce((sum, item) => sum + item.size, 0) : 0;
+    const incomingBytes = accepted.reduce((sum, file) => sum + file.size, 0);
+    if (existingBytes + incomingBytes > MAX_TOTAL_BYTES) {
+      const totalMb = ((existingBytes + incomingBytes) / 1048576).toFixed(1);
+      setError(`\u6587\u4ef6\u603b\u5927\u5c0f\u8d85\u8fc7 200MB \u4e0a\u9650\uff08\u5f53\u524d ${totalMb} MB\uff09\uff0c\u8bf7\u5220\u51cf\u6587\u4ef6\u540e\u91cd\u8bd5\u3002`);
+      return;
+    }
     setError(rejected.length ? `Unsupported file type: ${rejected.map((file) => file.name).join(', ')}` : '');
     const items = accepted.map((file) => ({ id: crypto.randomUUID(), file, name: file.name, size: file.size, status: 'pending' as const }));
     setFiles((current) => (config.multiple ? [...current, ...items] : items.slice(0, 1)));
